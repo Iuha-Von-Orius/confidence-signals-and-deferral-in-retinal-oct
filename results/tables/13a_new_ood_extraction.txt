@@ -1,0 +1,43 @@
+==============================================================================
+13a_extract_new_ood_features.py -- NEH + OCTDL feature extraction
+==============================================================================
+
+Imported from 08a_extract_ood_features.py (via importlib, since the filename starts with a digit):
+  CLASSES (08a:159), IMG_SIZE/MC_PASSES/IMAGENET_MEAN/IMAGENET_STD/DEVICE/BATCH_SIZE (08a:161,165-168,164), CACHE (08a:123),
+  build_backbone_transform (08a:451-460), ArrayDataset (08a:528-544), load_backbone (08a:416-429), build_feature_extractor (08a:432-448),
+  enable_mc_dropout (08a:463-475, called indirectly via run_full_extraction, not called directly here), run_full_extraction (08a:601-637).
+Import alone did not execute 08a's main() (guarded by `if __name__ == "__main__"`, 08a:876-877).
+
+------------------------------------------------------------------------------
+NEH
+------------------------------------------------------------------------------
+Rows before dedup: 16822   after dedup: 16803
+  CNV      n=5238   expected=5238   match=True
+  DRUSEN   n=5869   expected=5869   match=True
+  NORMAL   n=5696   expected=5696   match=True
+  Total    n=16803  expected=16803  match=True
+Label.unique() = ['CNV', 'DRUSEN', 'NORMAL']
+Ground truth = Label column (per-B-scan expert read), not Class (patient folder). No filtering to Label==Class.
+
+------------------------------------------------------------------------------
+OCTDL
+------------------------------------------------------------------------------
+  in-label     n=1462   expected=1462   match=True
+  ambiguous    n=248    expected=248    match=True
+  novel-class  n=354    expected=354    match=True
+  Total        n=2064   expected=2064  
+
+------------------------------------------------------------------------------
+Read failures / runtime
+------------------------------------------------------------------------------
+NEH read failures: 0 of 16803
+OCTDL read failures: 0 of 2064
+Wall-clock runtime: 2951.2 s (49.2 min)
+
+------------------------------------------------------------------------------
+Pre-registered predictions (recorded here, NOT evaluated by this script -- see module docstring for full text)
+------------------------------------------------------------------------------
+1. OCTDL novel-class (ERM/RAO/RVO/VID) Mahalanobis distance should exceed OCTDL in-label (DME/NO/AMD) Mahalanobis distance.
+2. OCTDL's overall Mahalanobis distance should exceed what its aspect ratio alone (882x322 vs Kermany 512x496) would predict, given its p1 range 7.2-16.3 sits on RETOUCH-Topcon's black-field-floor axis.
+3. NEH's Mahalanobis distance should sit well below RETOUCH-Topcon (mean -23.06) and close to RETOUCH-Spectralis (-0.55) -- both NEH and Kermany are Heidelberg Spectralis.
+4. NEH DRUSEN accuracy should be materially higher than OCT5k/Rasti's DRUSEN accuracy (45.1%, 195/432) -- same hospital, same device, same disease category, but NEH's labels are per-B-scan expert reads while Rasti's are inherited from a volume-level diagnosis.

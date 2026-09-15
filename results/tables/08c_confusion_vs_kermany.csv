@@ -1,0 +1,9 @@
+positive,negative,signal,auroc
+RETOUCH-Spectralis,Kermany-test,ood_cosine,0.8034018413803102
+RETOUCH-Topcon,Kermany-test,ood_cosine,0.9361640393837364
+RETOUCH-Cirrus,Kermany-test,ood_cosine,0.8763200183654729
+OCT5k,Kermany-test,ood_cosine,0.8844029980393617
+RETOUCH-Spectralis,Kermany-test,ood_maha_combined,0.8534115074186844
+RETOUCH-Topcon,Kermany-test,ood_maha_combined,1.0
+RETOUCH-Cirrus,Kermany-test,ood_maha_combined,0.9988008071142042
+OCT5k,Kermany-test,ood_maha_combined,0.990335635221999

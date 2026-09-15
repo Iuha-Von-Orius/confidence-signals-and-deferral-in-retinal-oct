@@ -1,0 +1,9 @@
+source,n_identifiers,n_identifiers_with_error,min_errors,median_errors,max_errors
+RETOUCH-Spectralis,38,3,0,0.0,3
+RETOUCH-Cirrus,38,4,0,0.0,9
+RETOUCH-Topcon,36,7,0,0.0,9
+Rasti,148,65,0,0.0,9
+NEH,441,407,0,5.0,49
+OCTDL-in-label,560,108,0,0.0,3
+OCTDL-ambiguous,79,0,0,0.0,0
+OCTDL-novel-class,183,46,0,0.0,3

@@ -1,0 +1,68 @@
+==============================================================================
+13c_evaluate_all_sources.py -- nine-source evaluation
+==============================================================================
+
+Imported from 08c_evaluate.py: add_source_column (08c:83-96), outcome_column (08c:147-154), risk_score_for (08c:157-162),
+  risk_coverage_curve (08c:128-144), pairwise_auroc (08c:166-181), CLASSES/N_CLASSES/NORMAL_IDX (08c:59-61).
+Imported from 09_aurc.py: per_sample_curve (09:160-201), aurc_trapezoid (09:204-218), AURC_SCALE (09:109-111).
+Reproduced with citation, not imported (inline code in 09's main(), not a function): E-AURC closed form (09:243-252, Geifman/Uziel/El-Yaniv 2019).
+Written fresh (no equivalent in 08c/09): nine-way source construction for NEH/OCTDL; all T01-T05/T07/T09-T12 tables; all ten figures; AUROC sign pre-flipping for mutual_info/cp_setsize.
+
+outcome_column dispatch: OCTDL-ambiguous/novel-class (no class label, known_diseased=True on every row) are passed to outcome_column as the literal string "RETOUCH" (dispatch only, never relabels the row's own source column) so its missed-disease branch applies -- used for T08 and T11 only; T09's miss-rate is instead computed directly from known_diseased (a more general, row-level formula, not via this dispatch), and T01/T02/T04 correctly leave these two tiers blank.
+
+AUROC sign handling (pairwise_auroc always computes -signal_col internally, correct only for higher=in-distribution signals):
+  ood_cosine           raw: higher=more in-distribution -> passed as-is -> net: pairwise_auroc's negation orients it higher=more OOD
+  ood_maha_combined    raw: higher=more in-distribution -> passed as-is -> net: pairwise_auroc's negation orients it higher=more OOD
+  softmax_confidence   raw: higher=more in-distribution -> passed as-is -> net: pairwise_auroc's negation orients it higher=more OOD
+  mutual_info          raw: higher=more OOD -> pre-negated before calling pairwise_auroc, so its internal negation cancels -> net: no sign change
+  cp_setsize           raw: higher=more OOD -> pre-negated before calling pairwise_auroc, so its internal negation cancels -> net: no sign change
+
+Vendor backfill (13c's in-memory copy only, never written back to 13b_new_slice_scores.csv):
+  NEH -> "Spectralis"  (Sotoudeh-Paima et al., arXiv 2110.03002 -- "the Heidelberg SD-OCT imaging system at Noor Eye Hospital, Tehran, Iran")
+  OCTDL -> "Optovue"  (OCTDL, Scientific Data 2024, doi:10.1038/s41597-024-03182-7 -- acquisition device Optovue Avanti RTVue XR)
+
+------------------------------------------------------------------------------
+Tables
+------------------------------------------------------------------------------
+T01 13c_T01_source_summary.csv -- one row per source: n, patient/volume count, vendor, has_4class_truth, accuracy/sensitivity/specificity, 5-signal means.
+T02 13c_T02_confusion_<source>.csv (x4) -- 4x4 confusion matrix, count and row %, for the four sources with class-level truth.
+T03 13c_T03_disease_vs_normal.csv -- 2x2 disease-vs-normal confusion, same four sources.
+T04 13c_T04_per_class_accuracy.csv -- per-class accuracy, rows=CLASSES, columns=the four truth-bearing sources.
+T05 13c_T05_signal_stats.csv -- mean/std of the five signals, all nine sources.
+T06 13c_T06_auroc_vs_kermany.csv -- AUROC of each non-Kermany source vs Kermany-test, per signal.
+T07 13c_T07_deferral_rate.csv -- deferral rate, source x six conditions.
+T08 13c_T08_aurc.csv -- AURC/E-AURC, source x [2,3,4,5,B2], via 09's per_sample_curve/aurc_trapezoid; risk_definition column states which correct-definition each row used (derived from the same predicate outcome_column itself dispatches on, not a separately-inferred check).
+  (source, condition) pairs with zero errors under their own correct-definition -- aurc/e_aurc written as the string "undefined (0 errors)", not 0.0 or NaN (a zero-error group has no ranking to evaluate, and E-AURC's closed form would otherwise return a spurious tiny negative value):
+    OCTDL-ambiguous, condition 2
+    OCTDL-ambiguous, condition 3
+    OCTDL-ambiguous, condition 4
+    OCTDL-ambiguous, condition 5
+    OCTDL-ambiguous, condition B2
+T09 13c_T09_accepted_set_stats.csv -- accuracy and literal miss-rate among accepted samples at the natural operating point, source x six conditions.
+T10a/b/c 13c_T10*_octdl_tier_*.csv -- OCTDL's three tiers' signal stats, AUROC vs Kermany-test, and pairwise AUROC between tiers.
+T11 13c_T11_error_concentration.csv -- for the eight identifier-bearing sources: identifier count, count with >=1 error, min/median/max errors per identifier. Full errors-per-identifier histogram (not in the CSV):
+  RETOUCH-Spectralis: 0 errors x35 identifiers, 1 errors x2 identifiers, 3 errors x1 identifiers
+  RETOUCH-Cirrus: 0 errors x34 identifiers, 2 errors x1 identifiers, 3 errors x2 identifiers, 9 errors x1 identifiers
+  RETOUCH-Topcon: 0 errors x29 identifiers, 1 errors x1 identifiers, 2 errors x1 identifiers, 3 errors x1 identifiers, 5 errors x1 identifiers, 6 errors x1 identifiers, 9 errors x2 identifiers
+  Rasti: 0 errors x83 identifiers, 1 errors x12 identifiers, 2 errors x10 identifiers, 3 errors x5 identifiers, 4 errors x8 identifiers, 5 errors x6 identifiers, 6 errors x4 identifiers, 7 errors x7 identifiers, 8 errors x6 identifiers, 9 errors x7 identifiers
+  NEH: 0 errors x34 identifiers, 1 errors x47 identifiers, 2 errors x30 identifiers, 3 errors x31 identifiers, 4 errors x40 identifiers, 5 errors x40 identifiers, 6 errors x26 identifiers, 7 errors x23 identifiers, 8 errors x30 identifiers, 9 errors x32 identifiers, 10 errors x22 identifiers, 11 errors x10 identifiers, 12 errors x5 identifiers, 13 errors x8 identifiers, 14 errors x5 identifiers, 15 errors x3 identifiers, 16 errors x8 identifiers, 17 errors x7 identifiers, 18 errors x5 identifiers, 19 errors x5 identifiers, 20 errors x5 identifiers, 21 errors x1 identifiers, 22 errors x3 identifiers, 23 errors x3 identifiers, 24 errors x4 identifiers, 25 errors x2 identifiers, 26 errors x3 identifiers, 27 errors x2 identifiers, 28 errors x2 identifiers, 34 errors x1 identifiers, 39 errors x2 identifiers, 40 errors x1 identifiers, 49 errors x1 identifiers
+  OCTDL-in-label: 0 errors x452 identifiers, 1 errors x81 identifiers, 2 errors x23 identifiers, 3 errors x4 identifiers
+  OCTDL-ambiguous: 0 errors x79 identifiers
+  OCTDL-novel-class: 0 errors x137 identifiers, 1 errors x27 identifiers, 2 errors x14 identifiers, 3 errors x5 identifiers
+T12a/b/c 13c_T12*_ambiguous_vs_inlabel_*.csv -- OCTDL ambiguous vs in-label: signal stats, deferral rate at six conditions, pairwise AUROC.
+
+------------------------------------------------------------------------------
+Figures
+------------------------------------------------------------------------------
+F01 13c_F01_confusion_matrices.png -- 2x2 grid of T02's four confusion matrices.
+F02 13c_F02_maha.png / 13c_F02_cosine.png -- violin plots, all nine sources, one signal per figure.
+F03 13c_F03_auroc_heatmap.png -- AUROC heatmap, source x signal (T06's data).
+F04 13c_F04_risk_coverage_NEH.png / _OCTDL-in-label.png / _OCTDL-ambiguous.png / _OCTDL-novel-class.png -- one panel per source (not pooled -- OCTDL's three tiers use two different correct-definitions, so mixing them into one curve would not be an interpretable quantity), five condition curves each, title states which correct-definition that panel uses. OCTDL-ambiguous (0 errors) still plotted, flat at risk=0, with an on-figure note that the curve carries no ranking information.
+F05 13c_F05_deferral_by_source.png -- grouped bar, deferral rate, source x condition (T07's data).
+F06 13c_F06_intensity_percentiles.png -- p1/p50/p99 bar charts, seven physical datasets, from 11_explore_new_data.csv (n_intensity_sample-weighted mean across each dataset's own classes, not recomputed from pixels).
+F07 13c_F07_octdl_inlabel_vs_novel.png -- five-panel overlaid histograms, OCTDL in-label vs novel-class.
+F08 13c_F08_maha_vs_missrate.png -- scatter, mean ood_maha_combined vs no-deferral miss rate, one point per source (T01's data).
+F09 13c_F09_roc_novel_vs_inlabel.png -- five ROC curves, OCTDL novel-class vs in-label, one per signal, legend states AUROC.
+F10 13c_F10_ambiguous_vs_inlabel.png -- OCTDL ambiguous vs in-label: three signal-distribution panels plus a six-condition deferral-rate bar chart.
+
+Wall-clock runtime: 3.6 s

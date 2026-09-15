@@ -1,0 +1,13 @@
+source,condition,condition_label,deferral_rate
+OCTDL-in-label,1,No deferral,0.0
+OCTDL-in-label,2,OOD signals,0.14774281805745554
+OCTDL-in-label,3,Uncertainty,0.18878248974008208
+OCTDL-in-label,4,Conformal,0.08002735978112176
+OCTDL-in-label,5,All signals,0.11285909712722299
+OCTDL-in-label,B2,Softmax confidence,0.2441860465116279
+OCTDL-ambiguous,1,No deferral,0.0
+OCTDL-ambiguous,2,OOD signals,0.056451612903225805
+OCTDL-ambiguous,3,Uncertainty,0.1693548387096774
+OCTDL-ambiguous,4,Conformal,0.09274193548387097
+OCTDL-ambiguous,5,All signals,0.12096774193548387
+OCTDL-ambiguous,B2,Softmax confidence,0.2056451612903226

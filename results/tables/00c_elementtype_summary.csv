@@ -1,0 +1,7 @@
+vendor,set,element_type,n_volumes
+Cirrus,test,MET_UCHAR,14
+Cirrus,train,MET_UCHAR,24
+Spectralis,test,MET_USHORT,14
+Spectralis,train,MET_USHORT,24
+Topcon,test,MET_UCHAR,14
+Topcon,train,MET_UCHAR,22

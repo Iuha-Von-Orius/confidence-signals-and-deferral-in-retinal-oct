@@ -1,0 +1,6 @@
+positive,negative,signal,auroc
+OCTDL-ambiguous,OCTDL-in-label,ood_cosine,0.4026645448126737
+OCTDL-ambiguous,OCTDL-in-label,ood_maha_combined,0.4950837893296854
+OCTDL-ambiguous,OCTDL-in-label,softmax_confidence,0.45648084815321477
+OCTDL-ambiguous,OCTDL-in-label,mutual_info,0.45212314107938745
+OCTDL-ambiguous,OCTDL-in-label,cp_setsize,0.5068826949384405

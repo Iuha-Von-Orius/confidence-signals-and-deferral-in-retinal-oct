@@ -1,0 +1,4 @@
+condition,comparison,accuracy,std,n_kermany,n_other
+before_decode,Kermany vs RETOUCH-Spectralis (raw 16-bit),0.9968992248062015,0.0062015503875969095,300,342
+after_decode,Kermany vs RETOUCH-Spectralis (decoded),0.9501937984496124,0.012503766953134491,300,342
+reference_never_decoded,Kermany vs OCT5k-Spectralis (native 8-bit),0.9926492936342658,0.006296666532418573,300,1332

@@ -1,0 +1,261 @@
+source,condition,risk_definition,target_risk,max_coverage,required_deferral_rate
+Kermany-test,2,missed_disease,0.1,1.0,0.0
+Kermany-test,2,missed_disease,0.05,1.0,0.0
+Kermany-test,2,missed_disease,0.02,1.0,0.0
+Kermany-test,2,missed_disease,0.01,1.0,0.0
+Kermany-test,3,missed_disease,0.1,1.0,0.0
+Kermany-test,3,missed_disease,0.05,1.0,0.0
+Kermany-test,3,missed_disease,0.02,1.0,0.0
+Kermany-test,3,missed_disease,0.01,1.0,0.0
+Kermany-test,4,missed_disease,0.1,1.0,0.0
+Kermany-test,4,missed_disease,0.05,1.0,0.0
+Kermany-test,4,missed_disease,0.02,1.0,0.0
+Kermany-test,4,missed_disease,0.01,1.0,0.0
+Kermany-test,5,missed_disease,0.1,1.0,0.0
+Kermany-test,5,missed_disease,0.05,1.0,0.0
+Kermany-test,5,missed_disease,0.02,1.0,0.0
+Kermany-test,5,missed_disease,0.01,1.0,0.0
+Kermany-test,B2,missed_disease,0.1,1.0,0.0
+Kermany-test,B2,missed_disease,0.05,1.0,0.0
+Kermany-test,B2,missed_disease,0.02,1.0,0.0
+Kermany-test,B2,missed_disease,0.01,1.0,0.0
+Kermany-test,2,four_class_accuracy,0.1,1.0,0.0
+Kermany-test,2,four_class_accuracy,0.05,1.0,0.0
+Kermany-test,2,four_class_accuracy,0.02,1.0,0.0
+Kermany-test,2,four_class_accuracy,0.01,1.0,0.0
+Kermany-test,3,four_class_accuracy,0.1,1.0,0.0
+Kermany-test,3,four_class_accuracy,0.05,1.0,0.0
+Kermany-test,3,four_class_accuracy,0.02,1.0,0.0
+Kermany-test,3,four_class_accuracy,0.01,1.0,0.0
+Kermany-test,4,four_class_accuracy,0.1,1.0,0.0
+Kermany-test,4,four_class_accuracy,0.05,1.0,0.0
+Kermany-test,4,four_class_accuracy,0.02,1.0,0.0
+Kermany-test,4,four_class_accuracy,0.01,1.0,0.0
+Kermany-test,5,four_class_accuracy,0.1,1.0,0.0
+Kermany-test,5,four_class_accuracy,0.05,1.0,0.0
+Kermany-test,5,four_class_accuracy,0.02,1.0,0.0
+Kermany-test,5,four_class_accuracy,0.01,1.0,0.0
+Kermany-test,B2,four_class_accuracy,0.1,1.0,0.0
+Kermany-test,B2,four_class_accuracy,0.05,1.0,0.0
+Kermany-test,B2,four_class_accuracy,0.02,1.0,0.0
+Kermany-test,B2,four_class_accuracy,0.01,1.0,0.0
+RETOUCH-Spectralis,2,missed_disease,0.1,1.0,0.0
+RETOUCH-Spectralis,2,missed_disease,0.05,1.0,0.0
+RETOUCH-Spectralis,2,missed_disease,0.02,1.0,0.0
+RETOUCH-Spectralis,2,missed_disease,0.01,0.7807017543859649,0.2192982456140351
+RETOUCH-Spectralis,3,missed_disease,0.1,1.0,0.0
+RETOUCH-Spectralis,3,missed_disease,0.05,1.0,0.0
+RETOUCH-Spectralis,3,missed_disease,0.02,1.0,0.0
+RETOUCH-Spectralis,3,missed_disease,0.01,0.9473684210526315,0.052631578947368474
+RETOUCH-Spectralis,4,missed_disease,0.1,1.0,0.0
+RETOUCH-Spectralis,4,missed_disease,0.05,1.0,0.0
+RETOUCH-Spectralis,4,missed_disease,0.02,1.0,0.0
+RETOUCH-Spectralis,4,missed_disease,0.01,not reachable,not reachable
+RETOUCH-Spectralis,5,missed_disease,0.1,1.0,0.0
+RETOUCH-Spectralis,5,missed_disease,0.05,1.0,0.0
+RETOUCH-Spectralis,5,missed_disease,0.02,1.0,0.0
+RETOUCH-Spectralis,5,missed_disease,0.01,0.9619883040935673,0.03801169590643272
+RETOUCH-Spectralis,B2,missed_disease,0.1,1.0,0.0
+RETOUCH-Spectralis,B2,missed_disease,0.05,1.0,0.0
+RETOUCH-Spectralis,B2,missed_disease,0.02,1.0,0.0
+RETOUCH-Spectralis,B2,missed_disease,0.01,0.9181286549707602,0.08187134502923976
+RETOUCH-Cirrus,2,missed_disease,0.1,1.0,0.0
+RETOUCH-Cirrus,2,missed_disease,0.05,1.0,0.0
+RETOUCH-Cirrus,2,missed_disease,0.02,0.6754385964912281,0.32456140350877194
+RETOUCH-Cirrus,2,missed_disease,0.01,0.07309941520467836,0.9269005847953217
+RETOUCH-Cirrus,3,missed_disease,0.1,1.0,0.0
+RETOUCH-Cirrus,3,missed_disease,0.05,1.0,0.0
+RETOUCH-Cirrus,3,missed_disease,0.02,0.09064327485380116,0.9093567251461988
+RETOUCH-Cirrus,3,missed_disease,0.01,0.09064327485380116,0.9093567251461988
+RETOUCH-Cirrus,4,missed_disease,0.1,1.0,0.0
+RETOUCH-Cirrus,4,missed_disease,0.05,1.0,0.0
+RETOUCH-Cirrus,4,missed_disease,0.02,not reachable,not reachable
+RETOUCH-Cirrus,4,missed_disease,0.01,not reachable,not reachable
+RETOUCH-Cirrus,5,missed_disease,0.1,1.0,0.0
+RETOUCH-Cirrus,5,missed_disease,0.05,1.0,0.0
+RETOUCH-Cirrus,5,missed_disease,0.02,0.7046783625730995,0.29532163742690054
+RETOUCH-Cirrus,5,missed_disease,0.01,0.19883040935672514,0.8011695906432749
+RETOUCH-Cirrus,B2,missed_disease,0.1,1.0,0.0
+RETOUCH-Cirrus,B2,missed_disease,0.05,1.0,0.0
+RETOUCH-Cirrus,B2,missed_disease,0.02,not reachable,not reachable
+RETOUCH-Cirrus,B2,missed_disease,0.01,not reachable,not reachable
+RETOUCH-Topcon,2,missed_disease,0.1,0.904320987654321,0.095679012345679
+RETOUCH-Topcon,2,missed_disease,0.05,0.4104938271604938,0.5895061728395061
+RETOUCH-Topcon,2,missed_disease,0.02,0.2006172839506173,0.7993827160493827
+RETOUCH-Topcon,2,missed_disease,0.01,0.05246913580246913,0.9475308641975309
+RETOUCH-Topcon,3,missed_disease,0.1,0.941358024691358,0.058641975308642014
+RETOUCH-Topcon,3,missed_disease,0.05,0.4444444444444444,0.5555555555555556
+RETOUCH-Topcon,3,missed_disease,0.02,0.043209876543209874,0.9567901234567902
+RETOUCH-Topcon,3,missed_disease,0.01,0.043209876543209874,0.9567901234567902
+RETOUCH-Topcon,4,missed_disease,0.1,not reachable,not reachable
+RETOUCH-Topcon,4,missed_disease,0.05,not reachable,not reachable
+RETOUCH-Topcon,4,missed_disease,0.02,not reachable,not reachable
+RETOUCH-Topcon,4,missed_disease,0.01,not reachable,not reachable
+RETOUCH-Topcon,5,missed_disease,0.1,0.9351851851851852,0.06481481481481477
+RETOUCH-Topcon,5,missed_disease,0.05,0.015432098765432098,0.9845679012345679
+RETOUCH-Topcon,5,missed_disease,0.02,0.015432098765432098,0.9845679012345679
+RETOUCH-Topcon,5,missed_disease,0.01,0.015432098765432098,0.9845679012345679
+RETOUCH-Topcon,B2,missed_disease,0.1,0.9166666666666666,0.08333333333333337
+RETOUCH-Topcon,B2,missed_disease,0.05,0.4691358024691358,0.5308641975308642
+RETOUCH-Topcon,B2,missed_disease,0.02,not reachable,not reachable
+RETOUCH-Topcon,B2,missed_disease,0.01,not reachable,not reachable
+Rasti,2,missed_disease,0.1,0.5465465465465466,0.45345345345345345
+Rasti,2,missed_disease,0.05,0.19594594594594594,0.8040540540540541
+Rasti,2,missed_disease,0.02,0.005255255255255256,0.9947447447447447
+Rasti,2,missed_disease,0.01,0.005255255255255256,0.9947447447447447
+Rasti,3,missed_disease,0.1,0.6411411411411412,0.3588588588588588
+Rasti,3,missed_disease,0.05,0.39414414414414417,0.6058558558558558
+Rasti,3,missed_disease,0.02,0.07807807807807808,0.9219219219219219
+Rasti,3,missed_disease,0.01,0.012012012012012012,0.987987987987988
+Rasti,4,missed_disease,0.1,not reachable,not reachable
+Rasti,4,missed_disease,0.05,not reachable,not reachable
+Rasti,4,missed_disease,0.02,not reachable,not reachable
+Rasti,4,missed_disease,0.01,not reachable,not reachable
+Rasti,5,missed_disease,0.1,0.5930930930930931,0.4069069069069069
+Rasti,5,missed_disease,0.05,0.0075075075075075074,0.9924924924924925
+Rasti,5,missed_disease,0.02,0.0075075075075075074,0.9924924924924925
+Rasti,5,missed_disease,0.01,0.0075075075075075074,0.9924924924924925
+Rasti,B2,missed_disease,0.1,0.6283783783783784,0.3716216216216216
+Rasti,B2,missed_disease,0.05,not reachable,not reachable
+Rasti,B2,missed_disease,0.02,not reachable,not reachable
+Rasti,B2,missed_disease,0.01,not reachable,not reachable
+Rasti,2,four_class_accuracy,0.1,0.5465465465465466,0.45345345345345345
+Rasti,2,four_class_accuracy,0.05,0.19594594594594594,0.8040540540540541
+Rasti,2,four_class_accuracy,0.02,0.005255255255255256,0.9947447447447447
+Rasti,2,four_class_accuracy,0.01,0.005255255255255256,0.9947447447447447
+Rasti,3,four_class_accuracy,0.1,0.6411411411411412,0.3588588588588588
+Rasti,3,four_class_accuracy,0.05,0.39414414414414417,0.6058558558558558
+Rasti,3,four_class_accuracy,0.02,0.07807807807807808,0.9219219219219219
+Rasti,3,four_class_accuracy,0.01,0.012012012012012012,0.987987987987988
+Rasti,4,four_class_accuracy,0.1,not reachable,not reachable
+Rasti,4,four_class_accuracy,0.05,not reachable,not reachable
+Rasti,4,four_class_accuracy,0.02,not reachable,not reachable
+Rasti,4,four_class_accuracy,0.01,not reachable,not reachable
+Rasti,5,four_class_accuracy,0.1,0.5930930930930931,0.4069069069069069
+Rasti,5,four_class_accuracy,0.05,0.0075075075075075074,0.9924924924924925
+Rasti,5,four_class_accuracy,0.02,0.0075075075075075074,0.9924924924924925
+Rasti,5,four_class_accuracy,0.01,0.0075075075075075074,0.9924924924924925
+Rasti,B2,four_class_accuracy,0.1,0.6283783783783784,0.3716216216216216
+Rasti,B2,four_class_accuracy,0.05,not reachable,not reachable
+Rasti,B2,four_class_accuracy,0.02,not reachable,not reachable
+Rasti,B2,four_class_accuracy,0.01,not reachable,not reachable
+NEH,2,missed_disease,0.1,0.00011902636433970124,0.9998809736356603
+NEH,2,missed_disease,0.05,0.00011902636433970124,0.9998809736356603
+NEH,2,missed_disease,0.02,0.00011902636433970124,0.9998809736356603
+NEH,2,missed_disease,0.01,0.00011902636433970124,0.9998809736356603
+NEH,3,missed_disease,0.1,0.6745819198952568,0.32541808010474316
+NEH,3,missed_disease,0.05,0.17770636195917397,0.822293638040826
+NEH,3,missed_disease,0.02,not reachable,not reachable
+NEH,3,missed_disease,0.01,not reachable,not reachable
+NEH,4,missed_disease,0.1,not reachable,not reachable
+NEH,4,missed_disease,0.05,not reachable,not reachable
+NEH,4,missed_disease,0.02,not reachable,not reachable
+NEH,4,missed_disease,0.01,not reachable,not reachable
+NEH,5,missed_disease,0.1,0.0009522109147176099,0.9990477890852824
+NEH,5,missed_disease,0.05,0.0005356186395286556,0.9994643813604713
+NEH,5,missed_disease,0.02,0.0005356186395286556,0.9994643813604713
+NEH,5,missed_disease,0.01,0.0005356186395286556,0.9994643813604713
+NEH,B2,missed_disease,0.1,0.6345890614771171,0.36541093852288287
+NEH,B2,missed_disease,0.05,0.1827054692614414,0.8172945307385586
+NEH,B2,missed_disease,0.02,not reachable,not reachable
+NEH,B2,missed_disease,0.01,not reachable,not reachable
+NEH,2,four_class_accuracy,0.1,0.00011902636433970124,0.9998809736356603
+NEH,2,four_class_accuracy,0.05,0.00011902636433970124,0.9998809736356603
+NEH,2,four_class_accuracy,0.02,0.00011902636433970124,0.9998809736356603
+NEH,2,four_class_accuracy,0.01,0.00011902636433970124,0.9998809736356603
+NEH,3,four_class_accuracy,0.1,0.6745819198952568,0.32541808010474316
+NEH,3,four_class_accuracy,0.05,0.17770636195917397,0.822293638040826
+NEH,3,four_class_accuracy,0.02,not reachable,not reachable
+NEH,3,four_class_accuracy,0.01,not reachable,not reachable
+NEH,4,four_class_accuracy,0.1,not reachable,not reachable
+NEH,4,four_class_accuracy,0.05,not reachable,not reachable
+NEH,4,four_class_accuracy,0.02,not reachable,not reachable
+NEH,4,four_class_accuracy,0.01,not reachable,not reachable
+NEH,5,four_class_accuracy,0.1,0.0009522109147176099,0.9990477890852824
+NEH,5,four_class_accuracy,0.05,0.0005356186395286556,0.9994643813604713
+NEH,5,four_class_accuracy,0.02,0.0005356186395286556,0.9994643813604713
+NEH,5,four_class_accuracy,0.01,0.0005356186395286556,0.9994643813604713
+NEH,B2,four_class_accuracy,0.1,0.6345890614771171,0.36541093852288287
+NEH,B2,four_class_accuracy,0.05,0.1827054692614414,0.8172945307385586
+NEH,B2,four_class_accuracy,0.02,not reachable,not reachable
+NEH,B2,four_class_accuracy,0.01,not reachable,not reachable
+OCTDL-in-label,2,missed_disease,0.1,1.0,0.0
+OCTDL-in-label,2,missed_disease,0.05,0.6265389876880985,0.37346101231190154
+OCTDL-in-label,2,missed_disease,0.02,0.006155950752393981,0.993844049247606
+OCTDL-in-label,2,missed_disease,0.01,0.006155950752393981,0.993844049247606
+OCTDL-in-label,3,missed_disease,0.1,1.0,0.0
+OCTDL-in-label,3,missed_disease,0.05,0.8160054719562243,0.1839945280437757
+OCTDL-in-label,3,missed_disease,0.02,0.43091655266757867,0.5690834473324213
+OCTDL-in-label,3,missed_disease,0.01,0.22366621067031464,0.7763337893296853
+OCTDL-in-label,4,missed_disease,0.1,1.0,0.0
+OCTDL-in-label,4,missed_disease,0.05,not reachable,not reachable
+OCTDL-in-label,4,missed_disease,0.02,not reachable,not reachable
+OCTDL-in-label,4,missed_disease,0.01,not reachable,not reachable
+OCTDL-in-label,5,missed_disease,0.1,1.0,0.0
+OCTDL-in-label,5,missed_disease,0.05,0.7845417236662107,0.21545827633378933
+OCTDL-in-label,5,missed_disease,0.02,0.010259917920656635,0.9897400820793434
+OCTDL-in-label,5,missed_disease,0.01,0.010259917920656635,0.9897400820793434
+OCTDL-in-label,B2,missed_disease,0.1,1.0,0.0
+OCTDL-in-label,B2,missed_disease,0.05,0.826265389876881,0.17373461012311897
+OCTDL-in-label,B2,missed_disease,0.02,not reachable,not reachable
+OCTDL-in-label,B2,missed_disease,0.01,not reachable,not reachable
+OCTDL-in-label,2,four_class_accuracy,0.1,1.0,0.0
+OCTDL-in-label,2,four_class_accuracy,0.05,0.6265389876880985,0.37346101231190154
+OCTDL-in-label,2,four_class_accuracy,0.02,0.006155950752393981,0.993844049247606
+OCTDL-in-label,2,four_class_accuracy,0.01,0.006155950752393981,0.993844049247606
+OCTDL-in-label,3,four_class_accuracy,0.1,1.0,0.0
+OCTDL-in-label,3,four_class_accuracy,0.05,0.8160054719562243,0.1839945280437757
+OCTDL-in-label,3,four_class_accuracy,0.02,0.43091655266757867,0.5690834473324213
+OCTDL-in-label,3,four_class_accuracy,0.01,0.22366621067031464,0.7763337893296853
+OCTDL-in-label,4,four_class_accuracy,0.1,1.0,0.0
+OCTDL-in-label,4,four_class_accuracy,0.05,not reachable,not reachable
+OCTDL-in-label,4,four_class_accuracy,0.02,not reachable,not reachable
+OCTDL-in-label,4,four_class_accuracy,0.01,not reachable,not reachable
+OCTDL-in-label,5,four_class_accuracy,0.1,1.0,0.0
+OCTDL-in-label,5,four_class_accuracy,0.05,0.7845417236662107,0.21545827633378933
+OCTDL-in-label,5,four_class_accuracy,0.02,0.010259917920656635,0.9897400820793434
+OCTDL-in-label,5,four_class_accuracy,0.01,0.010259917920656635,0.9897400820793434
+OCTDL-in-label,B2,four_class_accuracy,0.1,1.0,0.0
+OCTDL-in-label,B2,four_class_accuracy,0.05,0.826265389876881,0.17373461012311897
+OCTDL-in-label,B2,four_class_accuracy,0.02,not reachable,not reachable
+OCTDL-in-label,B2,four_class_accuracy,0.01,not reachable,not reachable
+OCTDL-ambiguous,2,missed_disease,0.1,1.0,0.0
+OCTDL-ambiguous,2,missed_disease,0.05,1.0,0.0
+OCTDL-ambiguous,2,missed_disease,0.02,1.0,0.0
+OCTDL-ambiguous,2,missed_disease,0.01,1.0,0.0
+OCTDL-ambiguous,3,missed_disease,0.1,1.0,0.0
+OCTDL-ambiguous,3,missed_disease,0.05,1.0,0.0
+OCTDL-ambiguous,3,missed_disease,0.02,1.0,0.0
+OCTDL-ambiguous,3,missed_disease,0.01,1.0,0.0
+OCTDL-ambiguous,4,missed_disease,0.1,1.0,0.0
+OCTDL-ambiguous,4,missed_disease,0.05,1.0,0.0
+OCTDL-ambiguous,4,missed_disease,0.02,1.0,0.0
+OCTDL-ambiguous,4,missed_disease,0.01,1.0,0.0
+OCTDL-ambiguous,5,missed_disease,0.1,1.0,0.0
+OCTDL-ambiguous,5,missed_disease,0.05,1.0,0.0
+OCTDL-ambiguous,5,missed_disease,0.02,1.0,0.0
+OCTDL-ambiguous,5,missed_disease,0.01,1.0,0.0
+OCTDL-ambiguous,B2,missed_disease,0.1,1.0,0.0
+OCTDL-ambiguous,B2,missed_disease,0.05,1.0,0.0
+OCTDL-ambiguous,B2,missed_disease,0.02,1.0,0.0
+OCTDL-ambiguous,B2,missed_disease,0.01,1.0,0.0
+OCTDL-novel-class,2,missed_disease,0.1,0.5536723163841808,0.4463276836158192
+OCTDL-novel-class,2,missed_disease,0.05,0.002824858757062147,0.9971751412429378
+OCTDL-novel-class,2,missed_disease,0.02,0.002824858757062147,0.9971751412429378
+OCTDL-novel-class,2,missed_disease,0.01,0.002824858757062147,0.9971751412429378
+OCTDL-novel-class,3,missed_disease,0.1,0.11299435028248588,0.8870056497175142
+OCTDL-novel-class,3,missed_disease,0.05,0.07062146892655367,0.9293785310734464
+OCTDL-novel-class,3,missed_disease,0.02,0.025423728813559324,0.9745762711864406
+OCTDL-novel-class,3,missed_disease,0.01,0.025423728813559324,0.9745762711864406
+OCTDL-novel-class,4,missed_disease,0.1,not reachable,not reachable
+OCTDL-novel-class,4,missed_disease,0.05,not reachable,not reachable
+OCTDL-novel-class,4,missed_disease,0.02,not reachable,not reachable
+OCTDL-novel-class,4,missed_disease,0.01,not reachable,not reachable
+OCTDL-novel-class,5,missed_disease,0.1,not reachable,not reachable
+OCTDL-novel-class,5,missed_disease,0.05,not reachable,not reachable
+OCTDL-novel-class,5,missed_disease,0.02,not reachable,not reachable
+OCTDL-novel-class,5,missed_disease,0.01,not reachable,not reachable
+OCTDL-novel-class,B2,missed_disease,0.1,not reachable,not reachable
+OCTDL-novel-class,B2,missed_disease,0.05,not reachable,not reachable
+OCTDL-novel-class,B2,missed_disease,0.02,not reachable,not reachable
+OCTDL-novel-class,B2,missed_disease,0.01,not reachable,not reachable

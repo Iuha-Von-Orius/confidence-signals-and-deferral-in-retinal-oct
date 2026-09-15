@@ -1,0 +1,58 @@
+==============================================================================
+17_confusion_by_disease.py -- by-disease confusion, nine sources, six conditions
+==============================================================================
+
+Source construction reused verbatim from 13c_evaluate_all_sources.py's load_merged_df (13c:180-199) via importlib -- reads 08b_slice_scores.csv and 13b_new_slice_scores.csv, the same two files this script itself reads no other numbers from.
+Also reused: SOURCES_ORDER (13c:134-135), TRUTH_SOURCES (13c:136), CONDITIONS_ALL (13c:139-140), CLASSES (13c:125, from 08c:59-61).
+NOT reused: outcome_column/correct_for/risk_definition_for/risk_score_for (13c:213-229, 08c:147-162) -- none of this script's tables need a "correct" boolean.
+Written fresh, no equivalent function exists in 13c to import: accepted_mask(), mirroring the accepted/deferred dispatch inlined in 13c's build_t07 (13c:358-364), build_t09 (13c:426-431) and build_t12 (13c:496-502).
+
+'Accepted' definition, used throughout: condition 1 = every row in the source (nothing deferred); conditions 2/3/4/5 = ~defer_condition{N}; condition B2 = ~defer_B2.
+
+------------------------------------------------------------------------------
+Tables
+------------------------------------------------------------------------------
+17_T17_confusion_by_disease.csv (480 rows) -- source, condition, true_class, predicted_class, count, row_pct. 4 TRUTH_SOURCES x 6 conditions x 4 true_class x 5 predicted_class (4 CLASSES + 'deferred'). true_label_name/predicted_class_name read from the merged 08b/13b slice-score rows (via load_merged_df); row_pct denominator is the source's own true_class total, matching 13c_T02's own row-pct convention (round to 2dp).
+17_T18_disease_vs_normal.csv (144 rows) -- source, condition, true_state, predicted_state, count, row_pct. Same 4 sources x 6 conditions, true_label_name/predicted_class_name collapsed to Disease/Normal via .ne("NORMAL"), the same mapping 13c_T03's build_t03 uses (13c:304-305).
+17_T19_missed_disease_labelless.csv (30 rows) -- source, condition, n, n_deferred, n_accepted, n_accepted_normal, pct_accepted_normal. The 5 sources with no class-level truth. n_accepted_normal/n_accepted is not known_diseased-filtered; confirmed this run (see below) that every row in all 5 sources has known_diseased==True, so no filter would change this ratio.
+
+------------------------------------------------------------------------------
+known_diseased check, the 5 label-less sources
+------------------------------------------------------------------------------
+  RETOUCH-Spectralis: known_diseased==True on 342 of 342 rows -- all True
+  RETOUCH-Cirrus: known_diseased==True on 342 of 342 rows -- all True
+  RETOUCH-Topcon: known_diseased==True on 324 of 324 rows -- all True
+  OCTDL-ambiguous: known_diseased==True on 248 of 248 rows -- all True
+  OCTDL-novel-class: known_diseased==True on 354 of 354 rows -- all True
+
+------------------------------------------------------------------------------
+Regression checks
+------------------------------------------------------------------------------
+Check 1: accepted + deferred == n, and n == 13c_T01_source_summary.csv's own 'n' column (54 combinations: 9 sources x 6 conditions)
+  PASS
+
+Check 2: deferral rate == 13c_T07_deferral_rate.csv's 'deferral_rate' column (same 54 combinations). T07's 'condition' column round-trips through CSV as strings ('1'..'5','B2'), not native int/str -- this script's own condition value is cast via str(condition) before matching, the same CSV round-trip dtype trap already documented in this project's 15_augrc.py fix.
+  PASS
+
+Check 3: condition-1 confusion matrix == 13c_T02_confusion_<source>.csv cell by cell, for the four TRUTH_SOURCES ('pred_{CLASS}_n' columns)
+  PASS
+
+Check 5: T17 diagonal-sum / accepted-total == 13c_T09_accepted_set_stats.csv's 'accuracy' (4 TRUTH_SOURCES); T19 'pct_accepted_normal' == T09's 'miss_rate' (5 label-less sources)
+  PASS
+
+Check 6: NEH true_label_name x Label cross-tab must be diagonal (exactly one non-zero cell per row)
+  PASS (diagonal)
+
+------------------------------------------------------------------------------
+No mismatches found in any of the 5 regression checks.
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+Figures (all read fresh from the CSVs listed, not from any in-memory dataframe from the table-building step above)
+------------------------------------------------------------------------------
+F26 17_F26_confusion_<source>.png (x4, one per TRUTH_SOURCE) -- 17_T17_confusion_by_disease.csv's true_class, predicted_class, count, row_pct columns, one 4x5 heat map per condition.
+F27 17_F27_missed_disease_accepted.png -- 17_T19_missed_disease_labelless.csv's pct_accepted_normal column, grouped bar, 5 label-less sources x 6 conditions.
+F28 17_F28_per_class_accepted_error.png -- 17_T17_confusion_by_disease.csv's true_class/predicted_class/count columns (predicted_class != 'deferred' rows only), 1 - correct/accepted_for_class per true_class per condition, 4 TRUTH_SOURCES.
+F29 17_F29_accept_defer_breakdown.png -- 17_T17_confusion_by_disease.csv's true_class/predicted_class/count columns, all 3 predicted_class categories (own class = correct, other 3 classes = incorrect, 'deferred'), normalised to each true class's own total, 4 TRUTH_SOURCES.
+
+Wall-clock runtime: 2.6 s

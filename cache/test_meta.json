@@ -1,0 +1,21 @@
+{
+  "split": "test",
+  "n_images": 968,
+  "feature_dims": [
+    16,
+    32,
+    48,
+    112,
+    192,
+    1280
+  ],
+  "img_size": 260,
+  "batch_size": 64,
+  "model": "tf_efficientnetv2_b0",
+  "drop_rate": 0.3,
+  "drop_path_rate": 0.2,
+  "seed": 42,
+  "mc_passes": 50,
+  "mc_mean_std": 0.001927,
+  "seconds": 188.3
+}

@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.vscode/
+.review/
+
+# Keep generated features and training state outside the source repository.
+cache/*.npy
+!cache/test_probs.npy
+!cache/oct5k_probs.npy
+!cache/neh_probs.npy
+!cache/octdl_probs.npy
+checkpoints/*.pt

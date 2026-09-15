@@ -1,0 +1,94 @@
+==============================================================================
+15b_plot_grc.py -- windowed AUGRC and annotated generalized-risk curves
+==============================================================================
+
+Imported from 15_augrc.py (itself importing 09_aurc.py and 13c_evaluate_all_sources.py -- see 15_augrc.py's own docstring for those original line numbers): compute_augrc (15:145-176), augrc_trapezoid (15:134-142, referenced not called), load_merged_df, correct_for, risk_definition_for, risk_score_for, SOURCES_ORDER, CONDITIONS_AURC, CONDITION_COLOURS, CONDITION_LABELS, TABDIR, FIGDIR, PROJECT (all 15_augrc.py module-level names).
+Curves reused verbatim from compute_augrc's own returned `curves` dict -- never re-sorted, re-accumulated, or re-integrated by this script.
+rank_augrc_window excludes OCTDL-ambiguous (blank), per this script's explicit brief -- NOT the same as 15_augrc.py's own full-range rank_augrc, which ranks it normally (tied at 1) since augrc=0.0 there is a real defined value, not a 0/0. Both are internally consistent; this script simply follows a different explicit instruction for this one column.
+
+------------------------------------------------------------------------------
+Regression check: this script's full-range augrc_x1000 (from its own compute_augrc call) vs results/tables/15_augrc.csv's augrc_x1000
+------------------------------------------------------------------------------
+  rows compared: 45   max abs diff: 3.553e-15
+  PASS -- curves reused from compute_augrc reproduce 15_augrc.csv exactly.
+
+------------------------------------------------------------------------------
+15b_augrc_window.csv -- window [0.7, 0.9], full contents
+------------------------------------------------------------------------------
+            source condition     risk_definition     n  base_error  augrc_window  augrc_window_x1000 augrc_window_ratio_vs_random  rank_augrc_window  augrc_x1000  rank_augrc
+      Kermany-test         2 four_class_accuracy   968    0.003099      0.000000            0.000000                          0.0                  1     0.028281           2
+      Kermany-test         3 four_class_accuracy   968    0.003099      0.000000            0.000000                          0.0                  1     0.031483           3
+      Kermany-test         4 four_class_accuracy   968    0.003099      0.002492            2.492212                     1.005192                  2     1.557591           5
+      Kermany-test         5 four_class_accuracy   968    0.003099      0.000000            0.000000                          0.0                  1     0.032550           4
+      Kermany-test        B2 four_class_accuracy   968    0.003099      0.000000            0.000000                          0.0                  1     0.011206           1
+RETOUCH-Spectralis         2      missed_disease   342    0.014620      0.007024            7.023529                     0.600512                  3     2.928251           3
+RETOUCH-Spectralis         3      missed_disease   342    0.014620      0.003193            3.193290                     0.273026                  1     2.321227           2
+RETOUCH-Spectralis         4      missed_disease   342    0.014620      0.008180            8.180279                     0.699414                  4     5.390548           5
+RETOUCH-Spectralis         5      missed_disease   342    0.014620      0.003193            3.193290                     0.273026                  1     1.885195           1
+RETOUCH-Spectralis        B2      missed_disease   342    0.014620      0.004959            4.958791                     0.423977                  2     3.240313           4
+    RETOUCH-Cirrus         2      missed_disease   342    0.049708      0.023255           23.255019                     0.584795                  2    15.273930           2
+    RETOUCH-Cirrus         3      missed_disease   342    0.049708      0.027111           27.110906                      0.68176                  3    19.480353           3
+    RETOUCH-Cirrus         4      missed_disease   342    0.049708      0.041337           41.337386                     1.039514                  5    25.798536           5
+    RETOUCH-Cirrus         5      missed_disease   342    0.049708      0.022558           22.558223                     0.567273                  1    13.025375           1
+    RETOUCH-Cirrus        B2      missed_disease   342    0.049708      0.027808           27.807702                     0.699282                  4    20.395164           4
+    RETOUCH-Topcon         2      missed_disease   324    0.108025      0.069021           69.020538                     0.798666                  1    39.832914           2
+    RETOUCH-Topcon         3      missed_disease   324    0.108025      0.076413           76.412704                     0.884204                  4    41.099870           3
+    RETOUCH-Topcon         4      missed_disease   324    0.108025      0.083660           83.660131                     0.968067                  5    52.383402           4
+    RETOUCH-Topcon         5      missed_disease   324    0.108025      0.076079           76.079294                     0.880346                  3    60.370942           5
+    RETOUCH-Topcon        B2      missed_disease   324    0.108025      0.072512           72.511812                     0.839065                  2    38.766004           1
+             Rasti         2 four_class_accuracy  1332    0.219970      0.127299          127.298751                     0.723387                  5    65.834134           4
+             Rasti         3 four_class_accuracy  1332    0.219970      0.118713          118.713082                     0.674598                  2    59.394981           1
+             Rasti         4 four_class_accuracy  1332    0.219970      0.126011          126.011097                      0.71607                  4    81.555937           5
+             Rasti         5 four_class_accuracy  1332    0.219970      0.113558          113.558378                     0.645306                  1    62.432647           2
+             Rasti        B2 four_class_accuracy  1332    0.219970      0.120466          120.465680                     0.684558                  3    65.008139           3
+               NEH         2 four_class_accuracy 16803    0.192644      0.141326          141.326042                     0.917015                  5    83.744067           5
+               NEH         3 four_class_accuracy 16803    0.192644      0.104613          104.613417                       0.6788                  2    57.038235           1
+               NEH         4 four_class_accuracy 16803    0.192644      0.129652          129.651534                     0.841263                  4    77.632991           4
+               NEH         5 four_class_accuracy 16803    0.192644      0.111752          111.751912                     0.725119                  3    66.698288           3
+               NEH        B2 four_class_accuracy 16803    0.192644      0.104575          104.574801                     0.678549                  1    57.935405           2
+    OCTDL-in-label         2 four_class_accuracy  1462    0.095075      0.056463           56.463000                     0.742346                  5    28.980174           4
+    OCTDL-in-label         3 four_class_accuracy  1462    0.095075      0.039522           39.522486                     0.519621                  1    21.155408           1
+    OCTDL-in-label         4 four_class_accuracy  1462    0.095075      0.049446           49.446336                     0.650095                  4    32.477810           5
+    OCTDL-in-label         5 four_class_accuracy  1462    0.095075      0.041539           41.538632                     0.546128                  3    23.929282           3
+    OCTDL-in-label        B2 four_class_accuracy  1462    0.095075      0.039851           39.851383                     0.523945                  2    23.788459           2
+   OCTDL-ambiguous         2      missed_disease   248    0.000000      0.000000            0.000000         undefined (0 errors)               <NA>     0.000000           1
+   OCTDL-ambiguous         3      missed_disease   248    0.000000      0.000000            0.000000         undefined (0 errors)               <NA>     0.000000           1
+   OCTDL-ambiguous         4      missed_disease   248    0.000000      0.000000            0.000000         undefined (0 errors)               <NA>     0.000000           1
+   OCTDL-ambiguous         5      missed_disease   248    0.000000      0.000000            0.000000         undefined (0 errors)               <NA>     0.000000           1
+   OCTDL-ambiguous        B2      missed_disease   248    0.000000      0.000000            0.000000         undefined (0 errors)               <NA>     0.000000           1
+ OCTDL-novel-class         2      missed_disease   354    0.197740      0.106726          106.726196                     0.674662                  1    65.378723           1
+ OCTDL-novel-class         3      missed_disease   354    0.197740      0.139985          139.985317                     0.884907                  4    82.311915           4
+ OCTDL-novel-class         4      missed_disease   354    0.197740      0.131769          131.769250                      0.83297                  3    80.468575           3
+ OCTDL-novel-class         5      missed_disease   354    0.197740      0.130442          130.442242                     0.824581                  2    79.287561           2
+ OCTDL-novel-class        B2      missed_disease   354    0.197740      0.151316          151.315873                     0.956532                  5    88.875323           5
+
+------------------------------------------------------------------------------
+Full-range vs window mean rank, per condition, like-for-like: both over the 8 sources excluding OCTDL-ambiguous
+------------------------------------------------------------------------------
+  condition 2: mean rank_augrc (full range)=2.8750  mean rank_augrc_window ([0.7,0.9])=2.8750
+  condition 3: mean rank_augrc (full range)=2.2500  mean rank_augrc_window ([0.7,0.9])=2.2500
+  condition 4: mean rank_augrc (full range)=4.5000  mean rank_augrc_window ([0.7,0.9])=3.8750
+  condition 5: mean rank_augrc (full range)=2.6250  mean rank_augrc_window ([0.7,0.9])=1.8750
+  condition B2: mean rank_augrc (full range)=2.7500  mean rank_augrc_window ([0.7,0.9])=2.5000
+  n_sources=8, excluded=['OCTDL-ambiguous']
+
+------------------------------------------------------------------------------
+mean ood_maha_combined per source, and the resulting panel order (descending) used in F24/F25
+------------------------------------------------------------------------------
+  Kermany-test: +0.188638
+  RETOUCH-Spectralis: -0.552583
+  Rasti: -3.353560
+  RETOUCH-Cirrus: -3.710973
+  NEH: -5.899104
+  OCTDL-novel-class: -6.655322
+  OCTDL-in-label: -6.807310
+  OCTDL-ambiguous: -6.911051
+  RETOUCH-Topcon: -23.060904
+  panel order in F24/F25 (OCTDL-ambiguous excluded from both figures: zero errors, generalised risk identically zero, no ranking information): Kermany-test > RETOUCH-Spectralis > Rasti > RETOUCH-Cirrus > NEH > OCTDL-novel-class > OCTDL-in-label > RETOUCH-Topcon
+
+------------------------------------------------------------------------------
+Window choice
+------------------------------------------------------------------------------
+[0.7, 0.9] uses the same three coverage levels ([0.7, 0.8, 0.9]) as this project's matched-coverage tables (see 14_cost_and_coverage.py's T16/matched-coverage section) -- that range was already justified there on clinical-feasibility grounds; it is not selected post hoc in this script.
+
+Wall-clock runtime: 1.5 s

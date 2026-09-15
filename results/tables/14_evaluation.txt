@@ -1,0 +1,90 @@
+==============================================================================
+14_cost_and_coverage.py -- operating-point tables, conformal coverage, restricted-argmax diagnostic
+==============================================================================
+
+Imported from 07_policy.py: C_DEFER (07:106), COST_RATIOS (07:107), natural_stats (07:323-342).
+Imported from 08b_score_ood.py: apply_policy (08b:124-133), load_frozen_params (08b:142-146).
+Imported from 06_conformal.py: build_sets_mondrian (06:144-156), coverage_stats (06:159-175).
+Imported from 09_aurc.py: per_sample_curve (09:160-201).
+Imported from 08c_evaluate.py: risk_coverage_curve (08c:128-144), COVERAGE_GRID (08c:64) -- for T16. The coverage-grid indexing used to build 08c_matched_coverage_summary.csv is six lines inline in 08c's main() (08c:310-319), not a separate function, reproduced with that citation.
+Imported from 13c_evaluate_all_sources.py: load_merged_df, SOURCES_ORDER, TRUTH_SOURCES, OCTDL_TIERS, CONDITIONS_ALL, CONDITIONS_AURC, outcome_source_arg, correct_for, risk_definition_for, SOURCE_COLOURS_13C, IDENTIFIER_COL, CLASSES, N_CLASSES, NORMAL_IDX, risk_score_for.
+Reproduced with citation, not imported: q_dict class-name-to-index conversion (08b:116's pattern) -- set construction itself (build_sets_mondrian) is imported; this is the key-space glue around it.
+Written fresh (no equivalent upstream): T13/T14/T15 table assembly, rank-change table, conformal audit orchestration, restricted-argmax diagnostic, all six figures, max_coverage_at_risk.
+
+natural_stats formula, quoted verbatim (07:334-335): cost_accept = np.where(correct, 0.0, c_err); expected_cost = float(np.mean(np.where(defer, c_defer, cost_accept)))
+C_DEFER = 1.0   COST_RATIOS = [5, 10, 20, 50]   SELECTED_RATIO (this script) = 20
+
+------------------------------------------------------------------------------
+Cost-ratio case check (Case A vs Case B)
+------------------------------------------------------------------------------
+policy_params.json["conditions"]["2"]["weights"] keys: ['5', '10', '20', '50']
+policy_params.json["B2"]["thresholds"] keys: ['5', '10', '20', '50']
+Expected COST_RATIOS as strings: ['5', '10', '20', '50']
+CASE A: every cost ratio in COST_RATIOS has its own fitted {w,b} (and B2 threshold). T14 uses each ratio's own parameters to both decide and cost -- the scientifically correct procedure.
+
+------------------------------------------------------------------------------
+Part 5: probs/predicted_class correspondence verification (must show 0 mismatches before coverage numbers are trusted)
+------------------------------------------------------------------------------
+Note: cache_index is absent from 13b_new_slice_scores.csv (13b's build_index_frames() selects a fixed column list that does not include it, discovered this session) -- recovered for OCTDL-in-label by joining `merged` to cache/octdl_index.csv on `path` (all 2,064 OCTDL paths matched exactly). Kermany-test/Rasti/NEH need no such join (positional correspondence, verified below).
+  Kermany-test: 0 of 968 rows mismatch between freshly-loaded argmax and merged's recorded predicted_class
+  Rasti: 0 of 1332 rows mismatch between freshly-loaded argmax and merged's recorded predicted_class
+  NEH: 0 of 16803 rows mismatch between freshly-loaded argmax and merged's recorded predicted_class
+  OCTDL-in-label: 0 of 1462 rows mismatch between freshly-loaded argmax and merged's recorded predicted_class
+
+------------------------------------------------------------------------------
+Tables
+------------------------------------------------------------------------------
+14_T13_expected_cost.csv -- expected cost and relative_cost (= expected_cost / that source's own condition-1 cost), nine sources x six conditions, at the deployed ratio 20:1. relative_cost is the string "undefined (zero baseline cost)" wherever that source's condition-1 cost is exactly 0 (OCTDL-ambiguous, every condition) -- never inf, NaN or blank, same treatment as 13c's T08 zero-error degeneracy.
+14_T13b_robustness.csv -- one row per condition: worst-case relative_cost and which source attains it, count and list of sources with relative_cost > 1.0 (arithmetically: that condition's expected cost exceeds never deferring, at that source and the deployed ratio -- no evaluation of whether that is good or bad), mean/median relative_cost, and which sources were excluded from these statistics (undefined relative_cost) and why.
+14_T14_cost_ratio_sweep.csv -- expected cost and rank, source x condition x ratio in [5, 10, 20, 50].
+14_T14_rank_changes.csv -- per (source, condition), whether rank changed across the ratio sweep.
+14_T15_coverage_at_target_risk.csv -- max reachable coverage (or 'not reachable') at four target risks, two risk definitions.
+14_T16_matched_coverage.csv -- accepted error rate at coverage [0.7, 0.8, 0.9], nine sources x conditions [2, 3, 4, 5, 'B2'], via the imported risk_coverage_curve (08c:128-144); the coverage-grid indexing step itself is six lines inline in 08c's own main() (08c:310-319, what writes 08c_matched_coverage_summary.csv), not a separate function, reproduced here with that citation. relative_to_baseline is the string "undefined (zero baseline)" wherever that source's own no-deferral error rate is exactly 0 (OCTDL-ambiguous) -- never inf/NaN/blank, and worse_than_baseline is left blank (not False) in the same rows, since "worse than baseline" cannot be determined when the ratio itself is undefined.
+14_conformal_coverage.csv -- measured marginal coverage vs nominal 0.98, mean set size, four truth-bearing sources.
+14_conformal_per_class_coverage.csv -- same, by true class.
+14_restricted_argmax.csv -- Rasti/NEH confusion, per-class accuracy, overall accuracy, miss rate, unrestricted vs restricted argmax.
+
+------------------------------------------------------------------------------
+Restricted-argmax confusion matrices
+------------------------------------------------------------------------------
+Rasti unrestricted confusion matrix:
+predicted  CNV  DME  DRUSEN  NORMAL
+true                               
+CNV          0    0       0       0
+DME          8  421       1      20
+DRUSEN      76   39     195     122
+NORMAL       0   27       0     423
+Rasti restricted confusion matrix:
+predicted  CNV  DME  DRUSEN  NORMAL
+true                               
+CNV          0    0       0       0
+DME          0  429       1      20
+DRUSEN       0   74     232     126
+NORMAL       0   27       0     423
+NEH unrestricted confusion matrix:
+predicted   CNV  DME  DRUSEN  NORMAL
+true                                
+CNV        3009   66      87      72
+DME           0    0       0       0
+DRUSEN      987   62    2796    1147
+NORMAL      224  283     309    7761
+NEH restricted confusion matrix:
+predicted   CNV  DME  DRUSEN  NORMAL
+true                                
+CNV        3063    0      94      77
+DME           0    0       0       0
+DRUSEN     1014    0    2807    1171
+NORMAL      274    0     352    7951
+
+------------------------------------------------------------------------------
+Figures
+------------------------------------------------------------------------------
+14_F11_aurc.png / 14_F11_eaurc.png -- source x condition, from 13c_T08_aurc.csv (read, not recomputed); undefined cells blank.
+14_F12_expected_cost.png -- T13, grouped bar, source x condition.
+14_F13_cost_ratio_sweep.png -- T14, one panel per source, expected cost vs cost ratio (log), six condition lines.
+14_F14_coverage_at_risk.png -- T15 at missed-disease risk target 5%, grouped bar, hatched bars mark 'not reachable'.
+14_F15_conformal_coverage.png -- measured coverage vs 0.98 reference (left), per-class coverage (right).
+14_F16_restricted_argmax.png -- Rasti/NEH per-class accuracy, unrestricted vs restricted argmax.
+14_F20_matched_coverage_70.png / _80.png / _90.png -- one heatmap per matched-coverage point, nine sources x [2,3,4,5,B2,Baseline]; cell text is the accepted error rate, cell colour is relative_to_baseline on a shared diverging scale centred at 1.0 across all three figures; cells >1.0 or undefined (zero baseline) are additionally hatched.
+
+Wall-clock runtime: 2.5 s

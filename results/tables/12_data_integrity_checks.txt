@@ -1,0 +1,171 @@
+==============================================================================
+PART 1: OCTDL IMAGE FORMAT AUDIT (all 2,064 images, no sampling)
+==============================================================================
+
+--- 1. PIL Image.mode distribution by disease ---
+mode      RGB  RGBA
+disease            
+AMD      1073   158
+DME       124    23
+ERM       147     8
+NO        276    56
+RAO        18     4
+RVO        97     4
+VID        62    14
+
+--- 2. PIL Image.format distribution by disease (actual container format) ---
+format   JPEG  PNG
+disease           
+AMD      1004  227
+DME       109   38
+ERM       140   15
+NO        270   62
+RAO        17    5
+RVO        96    5
+VID        53   23
+
+--- 3. Files whose format != "JPEG" despite the .jpg extension ---
+Total: 375 of 2064
+Showing 50 of 375:
+    file_name disease format mode
+amd_1084498_1     AMD    PNG  RGB
+amd_1084498_2     AMD    PNG  RGB
+amd_1084498_3     AMD    PNG  RGB
+amd_1096590_1     AMD    PNG  RGB
+amd_1096590_2     AMD    PNG  RGB
+amd_1096590_3     AMD    PNG  RGB
+amd_1096590_4     AMD    PNG RGBA
+amd_1096590_5     AMD    PNG  RGB
+amd_1131743_1     AMD    PNG RGBA
+amd_1283443_1     AMD    PNG  RGB
+amd_1283443_2     AMD    PNG RGBA
+amd_1283443_3     AMD    PNG  RGB
+amd_1283443_4     AMD    PNG RGBA
+amd_1356382_2     AMD    PNG RGBA
+amd_1475608_1     AMD    PNG  RGB
+amd_1475608_2     AMD    PNG RGBA
+amd_1475608_3     AMD    PNG  RGB
+amd_1475608_4     AMD    PNG  RGB
+amd_1475608_5     AMD    PNG  RGB
+amd_1475608_6     AMD    PNG  RGB
+amd_1513396_1     AMD    PNG RGBA
+amd_1513396_2     AMD    PNG  RGB
+amd_1513396_3     AMD    PNG  RGB
+amd_1669733_1     AMD    PNG  RGB
+amd_1781906_1     AMD    PNG  RGB
+amd_1815432_1     AMD    PNG  RGB
+amd_1957252_1     AMD    PNG  RGB
+amd_1957252_2     AMD    PNG  RGB
+amd_1963173_1     AMD    PNG RGBA
+amd_2108530_1     AMD    PNG  RGB
+amd_2108530_2     AMD    PNG RGBA
+amd_2567390_1     AMD    PNG RGBA
+amd_2677606_1     AMD    PNG  RGB
+amd_2677606_2     AMD    PNG RGBA
+amd_2715738_1     AMD    PNG RGBA
+amd_2715738_2     AMD    PNG RGBA
+amd_2715738_3     AMD    PNG RGBA
+amd_2715738_4     AMD    PNG RGBA
+amd_2820037_2     AMD    PNG RGBA
+amd_2865077_1     AMD    PNG  RGB
+amd_2945668_1     AMD    PNG  RGB
+amd_2945668_2     AMD    PNG RGBA
+amd_2945668_3     AMD    PNG RGBA
+amd_2945668_4     AMD    PNG RGBA
+amd_2945668_5     AMD    PNG RGBA
+amd_2945668_6     AMD    PNG RGBA
+amd_3053793_1     AMD    PNG  RGB
+amd_3053793_2     AMD    PNG  RGB
+amd_3053793_3     AMD    PNG  RGB
+amd_3053793_4     AMD    PNG RGBA
+
+--- 4. Alpha channel stats for all RGBA images ---
+n RGBA images: 267
+alpha min  -- across-image min=255, max=255, mean=255.0000
+alpha max  -- across-image min=255, max=255, mean=255.0000
+alpha mean -- across-image min=255.0000, max=255.0000, mean=255.0000
+Images with alpha min < 255 (not fully opaque): 0
+
+--- 5. Three-way grayscale comparison for non-opaque RGBA images ---
+Not applicable: 0 images have alpha min < 255, so there is no non-opaque RGBA image to compare compositing methods on.
+==============================================================================
+PART 2: NEH INDEX-FILE DUPLICATE-ROW AUDIT
+==============================================================================
+
+--- 1. Exact-duplicate rows (identical Directory string) ---
+24 rows, in 12 groups of 2
+All six columns identical within every group: True
+      Patient ID   Class Eye  B-scan   Label                  Directory
+3747          58     CNV  OS       5  DRUSEN      CNV/58/005_Drusen.tif
+3748          58     CNV  OS       5  DRUSEN      CNV/58/005_Drusen.tif
+3749          58     CNV  OS       6  DRUSEN      CNV/58/006_Drusen.tif
+3750          58     CNV  OS       6  DRUSEN      CNV/58/006_Drusen.tif
+3751          58     CNV  OS       7  DRUSEN      CNV/58/007_Drusen.tif
+3752          58     CNV  OS       7  DRUSEN      CNV/58/007_Drusen.tif
+3765          58     CNV  OS      14     CNV         CNV/58/014_CNV.tif
+3766          58     CNV  OS      14     CNV         CNV/58/014_CNV.tif
+3767          58     CNV  OS      15     CNV         CNV/58/015_CNV.tif
+3768          58     CNV  OS      15     CNV         CNV/58/015_CNV.tif
+3770          58     CNV  OS      16     CNV         CNV/58/016_CNV.tif
+3769          58     CNV  OS      16     CNV         CNV/58/016_CNV.tif
+3771          58     CNV  OS      17     CNV         CNV/58/017_CNV.tif
+3772          58     CNV  OS      17     CNV         CNV/58/017_CNV.tif
+3773          58     CNV  OS      18     CNV         CNV/58/018_CNV.tif
+3774          58     CNV  OS      18     CNV         CNV/58/018_CNV.tif
+3775          58     CNV  OS      19     CNV         CNV/58/019_CNV.tif
+3776          58     CNV  OS      19     CNV         CNV/58/019_CNV.tif
+4162          69     CNV  OS       1  DRUSEN      CNV/69/001_Drusen.tif
+4163          69     CNV  OS       1  DRUSEN      CNV/69/001_Drusen.tif
+7381         150  DRUSEN  OD      19  DRUSEN  DRUSEN/150/019_Drusen.tif
+7382         150  DRUSEN  OD      19  DRUSEN  DRUSEN/150/019_Drusen.tif
+9490          59  DRUSEN  OD      10  DRUSEN   DRUSEN/59/010_Drusen.tif
+9491          59  DRUSEN  OD      10  DRUSEN   DRUSEN/59/010_Drusen.tif
+
+--- 2. Case-variant groups (Directory differs only in letter case) ---
+14 rows, in 7 groups of 2
+  group (normalised=drusen/59/000_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD       0 NORMAL DRUSEN/59/000_NOrmal.tif
+             59 DRUSEN  OD       0 NORMAL DRUSEN/59/000_Normal.tif
+  group (normalised=drusen/59/004_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD       4 NORMAL DRUSEN/59/004_NOrmal.tif
+             59 DRUSEN  OD       4 NORMAL DRUSEN/59/004_Normal.tif
+  group (normalised=drusen/59/005_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD       5 NORMAL DRUSEN/59/005_NOrmal.tif
+             59 DRUSEN  OD       5 NORMAL DRUSEN/59/005_Normal.tif
+  group (normalised=drusen/59/006_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD       6 NORMAL DRUSEN/59/006_NOrmal.tif
+             59 DRUSEN  OD       6 NORMAL DRUSEN/59/006_Normal.tif
+  group (normalised=drusen/59/007_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD       7 NORMAL DRUSEN/59/007_NOrmal.tif
+             59 DRUSEN  OD       7 NORMAL DRUSEN/59/007_Normal.tif
+  group (normalised=drusen/59/008_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD       8 NORMAL DRUSEN/59/008_NOrmal.tif
+             59 DRUSEN  OD       8 NORMAL DRUSEN/59/008_Normal.tif
+  group (normalised=drusen/59/029_normal.tif): Label consistent=True  Class consistent=True
+     Patient ID  Class Eye  B-scan  Label                Directory
+             59 DRUSEN  OD      29 NORMAL DRUSEN/59/029_NOrmal.tif
+             59 DRUSEN  OD      29 NORMAL DRUSEN/59/029_Normal.tif
+
+--- 3. (written to CSV, tagged by category -- see 12_data_integrity_checks.csv) ---
+neh_exact_duplicate: 12 groups / 24 rows.  neh_case_variant: 7 groups / 14 rows.
+
+--- 4. Deduplication rule (stated precisely, for reproduction) ---
+Normalise: dir_norm = Directory.str.lower() (case-fold only; no other change to the string). Deduplicate: pandas drop_duplicates(subset="dir_norm", keep="first"), i.e. for every group of rows sharing a normalised Directory, keep the row that appears first in data_information.csv's own top-to-bottom row order (the CSV's original index), discard the rest. No other ordering (e.g. by Patient ID, B-scan) is applied.
+
+--- 5. Per-class counts after deduplication, vs disk total ---
+  Class=CNV      n=5238
+  Class=DRUSEN   n=5869
+  Class=NORMAL   n=5696
+  Total: 16803   disk total (from 11_explore_new_data.py's independent os.walk): 16803   match=True
+
+--- 6. Label==Class filter re-run on deduplicated data, vs published worst-case ---
+  CNV      computed=3234   published=3240   match=False  diff=-6
+  DRUSEN   computed=3740   published=3742   match=False  diff=-2
+  NORMAL   computed=5667   published=5667   match=True  diff=0
+  Total    computed=12641  published=12649  match=False  diff=-8

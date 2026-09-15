@@ -1,0 +1,445 @@
+==============================================================================
+STEP 1: DATASET LOCATION
+==============================================================================
+NEH root: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases
+NEH label CSV: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/data_information.csv
+OCTDL root: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/OCTDL Optical Coherence Tomography Dataset for Image-Based Deep Learning Methods
+OCTDL label CSV: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/OCTDL Optical Coherence Tomography Dataset for Image-Based Deep Learning Methods/OCTDL_labels.csv
+Kermany train root: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Paul_Mooney/OCT2017/train
+RETOUCH root: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/RETOUCH/RETOUCH
+OCT5k root: /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Macular-Dataset-R.Rasti_old
+==============================================================================
+STEP 2: FILE LISTING AND CLASS COUNTS
+==============================================================================
+
+--- NEH: per-class counts, extensions, version check ---
+  Class=CNV      n_images=5248   
+  Class=DRUSEN   n_images=5878   
+  Class=NORMAL   n_images=5696   
+  Total images: 16822  (published 16,822-image version: 16822, match=True; published 12,649 worst-case version: 12649, match=False)
+  This copy is the 16,822 version.
+  Extension distribution: {'tif': 13262, 'jpg': 3560}
+
+--- OCTDL: per-class counts vs published, extension distribution ---
+  disease=AMD    n_images=1231   published=1231   match=True
+  disease=DME    n_images=147    published=147    match=True
+  disease=ERM    n_images=155    published=155    match=True
+  disease=NO     n_images=332    published=332    match=True
+  disease=RVO    n_images=101    published=101    match=True
+  disease=VID    n_images=76     published=76     match=True
+  disease=RAO    n_images=22     published=22     match=True
+  Total images: 2064  published=2064  match=True
+  Extension distribution: {'jpg': 2064}
+
+--- NEH: CSV -> disk (every Directory path, existence only) ---
+  Exists: 16822   Missing: 0
+
+--- NEH: disk -> CSV (independent directory walk, extension counts only) ---
+  Disk walk total: 16803   CSV total: 16822   match=False
+  Disk walk .tif: 13243   CSV .tif: 13262   match=False
+  Disk walk .jpg: 3560   CSV .jpg: 3560   match=True
+  On disk but not in CSV Directory column: 0
+  CSV rows: 16822   exact-duplicate Directory rows (identical string, appears >1 time): 12   unique Directory strings: 16810
+  Unique Directory strings not matched to any disk-walk path by exact string: 7 (sum of the two effects above: 12 + 7 = 19, vs CSV-total-minus-disk-total gap of 19)
+  These 7 all pass exist()==True per the CSV->disk check above, so none is a missing-file case. Checked directly: 7 of 7 match a disk-walk path when compared case-insensitively (i.e. the CSV's Directory string differs from the real on-disk filename only in letter case); the remaining 0 do not and are listed below with no explanation assumed.
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/000_NOrmal.tif
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/004_NOrmal.tif
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/005_NOrmal.tif
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/006_NOrmal.tif
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/007_NOrmal.tif
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/008_NOrmal.tif
+    /Users/yuhaowang/Documents/UCL/Term3_Proj/Dataset/Tehran_Labeled Retinal Optical Coherence Tomography Dataset for Classification of Normal, Drusen, and CNV Cases/NEH_UT_2021RetinalOCTDataset/DRUSEN/59/029_NOrmal.tif
+
+--- OCTDL: CSV -> disk (every file_name path, existence only) ---
+  Exists: 2064   Missing: 0
+  OCTDL disk -> CSV direction already covered above (per-class counts independently matched against the CSV and the published figures) -- not repeated here.
+==============================================================================
+STEP 3: IMAGE PROPERTIES (n=200 per dataset, seed=42)
+==============================================================================
+
+--- NEH (pooled, n=200) ---
+NEH width                    min=     768.0  p25=     768.0  median=     768.0  p75=     768.0  max=     768.0
+NEH height                   min=     496.0  p25=     496.0  median=     496.0  p75=     496.0  max=     496.0
+NEH file size (bytes)        min=   41566.0  p25= 1142924.0  median= 1142924.0  p75= 1142924.0  max= 1142924.0
+NEH mode distribution: Counter({'RGB': 200})
+NEH RGB channel equality: 0 of 200 RGB images have R==G==B exactly
+
+--- NEH by extension ---
+Of the 200 draws: {'tif': 163, 'jpg': 37}
+NEH .tif width               min=     768.0  p25=     768.0  median=     768.0  p75=     768.0  max=     768.0
+NEH .tif height              min=     496.0  p25=     496.0  median=     496.0  p75=     496.0  max=     496.0
+NEH .tif file size (bytes)   min= 1142924.0  p25= 1142924.0  median= 1142924.0  p75= 1142924.0  max= 1142924.0
+NEH .tif mode distribution: Counter({'RGB': 163})
+NEH .tif RGB channel equality: 0 of 163 RGB images have R==G==B exactly
+NEH .jpg width               min=     768.0  p25=     768.0  median=     768.0  p75=     768.0  max=     768.0
+NEH .jpg height              min=     496.0  p25=     496.0  median=     496.0  p75=     496.0  max=     496.0
+NEH .jpg file size (bytes)   min=   41566.0  p25=   59863.0  median=   70670.0  p75=   81584.0  max=  113390.0
+NEH .jpg mode distribution: Counter({'RGB': 37})
+NEH .jpg RGB channel equality: 0 of 37 RGB images have R==G==B exactly
+
+--- OCTDL (pooled, n=200) ---
+OCTDL width                  min=     577.0  p25=     878.8  median=     882.0  p75=     926.5  max=    1162.0
+OCTDL height                 min=     207.0  p25=     311.0  median=     319.0  p75=     339.5  max=     426.0
+OCTDL file size (bytes)      min=   40180.0  p25=  122886.0  median=  195720.5  p75=  226445.5  max=  437515.0
+OCTDL mode distribution: Counter({'RGB': 172, 'RGBA': 28})
+OCTDL RGB channel equality: 109 of 172 RGB images have R==G==B exactly
+
+--- OCTDL: CSV-recorded vs actual (image_width, image_hight) ---
+Match: 200   Mismatch: 0  (of 200 sampled)
+==============================================================================
+STEP 4: INTENSITY DISTRIBUTIONS (n=500 per dataset, seed=42, raw pixels)
+==============================================================================
+Computed on raw pixel arrays before any resize or normalisation. Independent of results/tables/00c_rescale_comparison.csv (different code, not reused, except in the Kermany factorial addendum at the end of this section, which reads that file's already-saved Kermany row read-only).
+RETOUCH is captured post-SimpleITK-read (and, for Spectralis, post-decode) with no PIL step -- MetaImage is not a PIL-readable format. NEH, OCTDL, Kermany-train and OCT5k are all captured post-PIL-convert("L"). This is the one declared path difference in this comparison.
+RETOUCH decode: Spectralis (MET_USHORT, 16-bit) is decoded via decode_linear_fixed (round(v/65535*255), clipped to [0,255]); Topcon and Cirrus (MET_UCHAR, 8-bit) are cast to uint8 directly, no decode. The three RETOUCH rows below are therefore not measured under identical processing.
+
+--- NEH (n=500) ---
+  mean-of-500 p1    : 0.0000
+  mean-of-500 p5    : 0.0000
+  mean-of-500 p25   : 0.4920
+  mean-of-500 p50   : 9.3300
+  mean-of-500 p75   : 43.1020
+  mean-of-500 p95   : 148.9959
+  mean-of-500 p99   : 204.8295
+  mean-of-500 mean  : 32.9176
+  mean-of-500 std   : 50.0558
+
+--- NEH R/G/B channel stats (same sampled images), pooled and by extension ---
+  NEH pooled (n=500 images): R mean=32.9190 sd=51.3054; G mean=32.9166 sd=51.3130; B mean=32.9191 sd=51.3035
+  NEH pooled pairwise mean |diff|: |R-G|=0.0292  |G-B|=0.0287  |R-B|=0.0513
+  NEH .tif (n=386 images): R mean=32.2374 sd=51.0652; G mean=32.2353 sd=51.0755; B mean=32.2366 sd=51.0631
+  NEH .tif pairwise mean |diff|: |R-G|=0.0339  |G-B|=0.0335  |R-B|=0.0608
+  NEH .jpg (n=114 images): R mean=35.2270 sd=52.0442; G mean=35.2235 sd=52.0429; B mean=35.2302 sd=52.0429
+  NEH .jpg pairwise mean |diff|: |R-G|=0.0133  |G-B|=0.0123  |R-B|=0.0192
+
+--- OCTDL (n=500) ---
+  mean-of-500 p1    : 9.8940
+  mean-of-500 p5    : 15.4937
+  mean-of-500 p25   : 26.4840
+  mean-of-500 p50   : 44.2040
+  mean-of-500 p75   : 85.7680
+  mean-of-500 p95   : 156.7920
+  mean-of-500 p99   : 206.6525
+  mean-of-500 mean  : 61.3669
+  mean-of-500 std   : 46.4300
+
+--- Kermany-train (n=500) ---
+  mean-of-500 p1    : 0.0380
+  mean-of-500 p5    : 2.7420
+  mean-of-500 p25   : 16.1795
+  mean-of-500 p50   : 33.5620
+  mean-of-500 p75   : 68.3040
+  mean-of-500 p95   : 169.8920
+  mean-of-500 p99   : 221.0429
+  mean-of-500 mean  : 51.5648
+  mean-of-500 std   : 53.3297
+
+--- RETOUCH: native ElementType by vendor, from find_retouch_volumes() ---
+element_type  MET_UCHAR  MET_USHORT
+vendor                             
+Cirrus               38           0
+Spectralis            0          38
+Topcon               36           0
+MET_USHORT = 16-bit native. MET_UCHAR = 8-bit native. (CSV's bitdepth column for these rows reflects the post-decode value that enters the pipeline, 8, not this native value.)
+
+--- RETOUCH-Spectralis (pool=342, sample n=342) ---
+  mean-of-342 p1    : 0.0000
+  mean-of-342 p5    : 0.0263
+  mean-of-342 p25   : 16.5292
+  mean-of-342 p50   : 29.5380
+  mean-of-342 p75   : 51.9094
+  mean-of-342 p95   : 116.9896
+  mean-of-342 p99   : 170.6739
+  mean-of-342 mean  : 40.3350
+  mean-of-342 std   : 37.2098
+
+--- RETOUCH-Cirrus (pool=342, sample n=342) ---
+  mean-of-342 p1    : 0.2339
+  mean-of-342 p5    : 9.1930
+  mean-of-342 p25   : 21.7076
+  mean-of-342 p50   : 30.3947
+  mean-of-342 p75   : 43.8333
+  mean-of-342 p95   : 81.7661
+  mean-of-342 p99   : 111.6031
+  mean-of-342 mean  : 35.7290
+  mean-of-342 std   : 22.2262
+
+--- RETOUCH-Topcon (pool=324, sample n=324) ---
+  mean-of-324 p1    : 34.0802
+  mean-of-324 p5    : 43.5556
+  mean-of-324 p25   : 54.3025
+  mean-of-324 p50   : 59.9815
+  mean-of-324 p75   : 70.2006
+  mean-of-324 p95   : 104.9940
+  mean-of-324 p99   : 133.9278
+  mean-of-324 mean  : 64.9480
+  mean-of-324 std   : 18.9965
+
+--- RETOUCH-Spectralis: pre-decode (raw 16-bit) statistics, same sampled slices ---
+  mean-of-342 p1    : 0.0000
+  mean-of-342 p5    : 7.2515
+  mean-of-342 p25   : 4248.3816
+  mean-of-342 p50   : 7591.4547
+  mean-of-342 p75   : 13348.5972
+  mean-of-342 p95   : 30068.5564
+  mean-of-342 p99   : 43858.0269
+  mean-of-342 mean  : 10366.0991
+  mean-of-342 std   : 9562.7190
+  RETOUCH-Spectralis raw16 min=0 max=65535 (across all sampled raw pixels, pooled)
+
+--- OCT5k (pool=1332, sample n=500) ---
+  mean-of-500 p1    : 0.1080
+  mean-of-500 p5    : 0.1080
+  mean-of-500 p25   : 0.1080
+  mean-of-500 p50   : 21.2000
+  mean-of-500 p75   : 59.7380
+  mean-of-500 p95   : 124.4140
+  mean-of-500 p99   : 173.0300
+  mean-of-500 mean  : 36.1981
+  mean-of-500 std   : 43.6348
+
+--- OCTDL by container format (PIL Image.format, not extension): full population (all 2,064 images) ---
+Counts:
+format   JPEG  PNG
+disease           
+AMD      1004  227
+DME       109   38
+ERM       140   15
+NO        270   62
+RAO        17    5
+RVO        96    5
+VID        53   23
+Row-normalised % (share of each disease's images that are each format):
+format    JPEG    PNG
+disease              
+AMD      81.56  18.44
+DME      74.15  25.85
+ERM      90.32   9.68
+NO       81.33  18.67
+RAO      77.27  22.73
+RVO      95.05   4.95
+VID      69.74  30.26
+Total: {'JPEG': 1689, 'PNG': 375}  (of 2064 images)
+
+--- OCTDL by container format: STEP 4's existing 500-sample only ---
+  format=PNG: n=83 of 500
+  mean-of-83 p1    : 16.5542
+  mean-of-83 p5    : 20.5042
+  mean-of-83 p25   : 28.9880
+  mean-of-83 p50   : 45.7349
+  mean-of-83 p75   : 87.1807
+  mean-of-83 p95   : 158.1084
+  mean-of-83 p99   : 205.9063
+  mean-of-83 mean  : 63.4992
+  mean-of-83 std   : 45.6337
+OCTDL PNG width              min=     553.0  p25=     740.5  median=     878.0  p75=     881.0  max=    1158.0
+OCTDL PNG height             min=     199.0  p25=     291.0  median=     313.0  p75=     319.0  max=     421.0
+OCTDL PNG file size (bytes)  min=   86346.0  p25=  217032.0  median=  260772.0  p75=  286917.5  max=  504047.0
+  format=JPEG: n=417 of 500
+  mean-of-417 p1    : 8.5683
+  mean-of-417 p5    : 14.4964
+  mean-of-417 p25   : 25.9856
+  mean-of-417 p50   : 43.8993
+  mean-of-417 p75   : 85.4868
+  mean-of-417 p95   : 156.5300
+  mean-of-417 p99   : 206.8010
+  mean-of-417 mean  : 60.9425
+  mean-of-417 std   : 46.5885
+OCTDL JPEG width             min=     557.0  p25=     882.0  median=     882.0  p75=    1101.0  max=    1166.0
+OCTDL JPEG height            min=     202.0  p25=     315.0  median=     322.0  p75=     410.0  max=     530.0
+OCTDL JPEG file size (bytes) min=   46032.0  p25=  132710.0  median=  194037.0  p75=  214472.0  max=  455051.0
+
+--- Kermany p99 factorial design (isolating 3 factors vs 00c_rescale_comparison.csv) ---
+Factors: (1) statistic definition [per-image percentile then mean, vs pooled-pixel percentile]; (2) sampling pool [raw Dataset folder, vs this project's locked splits/train.csv]; (3) sample size and RNG [n=500 numpy default_rng(42), vs n=300 pandas random_state=42]. splits/train.csv (70,484 rows) is a subset of the raw folder (83,484 files): the carved-out validation and calibration images are excluded from it. Stated as a fact only, no view taken on which pool is more appropriate.
+Cell 1 (per-image mean, raw folder, n=500, numpy) -- reused from the Kermany-train row above, not recomputed:
+  mean-of-500 p1    : 0.0380
+  mean-of-500 p5    : 2.7420
+  mean-of-500 p25   : 16.1795
+  mean-of-500 p50   : 33.5620
+  mean-of-500 p75   : 68.3040
+  mean-of-500 p95   : 169.8920
+  mean-of-500 p99   : 221.0429
+  mean-of-500 mean  : 51.5648
+  mean-of-500 std   : 53.3297
+Cell 2 (pooled-pixel, raw folder, n=500, numpy, SAME 500 files as cell 1 -- isolates statistic definition vs cell 1):
+  cell2 p1    : 0.0000
+  cell2 p5    : 0.0000
+  cell2 p25   : 13.0000
+  cell2 p50   : 30.0000
+  cell2 p75   : 61.0000
+  cell2 p95   : 183.0000
+  cell2 p99   : 255.0000
+  cell2 mean  : 48.6653
+  cell2 std   : 57.1959
+Cell 3 (per-image mean, splits/train.csv, n=500, numpy, fresh draw -- isolates sampling pool vs cell 1):
+  mean-of-500 p1    : 0.0500
+  mean-of-500 p5    : 2.7731
+  mean-of-500 p25   : 15.4695
+  mean-of-500 p50   : 32.3820
+  mean-of-500 p75   : 64.5980
+  mean-of-500 p95   : 163.1500
+  mean-of-500 p99   : 216.9978
+  mean-of-500 mean  : 49.2702
+  mean-of-500 std   : 51.1738
+Cell 4 (pooled-pixel, splits/train.csv, n=500, numpy, SAME 500 files as cell 3):
+  cell4 p1    : 0.0000
+  cell4 p5    : 0.0000
+  cell4 p25   : 12.0000
+  cell4 p50   : 29.0000
+  cell4 p75   : 58.0000
+  cell4 p95   : 161.0000
+  cell4 p99   : 255.0000
+  cell4 mean  : 46.2376
+  cell4 std   : 54.5960
+Reference (00c_rescale_comparison.csv's own recorded Kermany row -- pooled-pixel, splits/train.csv via pandas.sample, n=300, pandas random_state=42 -- read only, not recomputed. Comparing cell 4 against this isolates sample size/generator, since both are pooled-pixel over splits/train.csv):
+  ref p1    : 0.0000
+  ref p5    : 0.0000
+  ref p25   : 12.0000
+  ref p50   : 30.0000
+  ref p75   : 60.0000
+  ref p95   : 167.0000
+  ref p99   : 255.0000
+  ref mean  : 47.4454
+  ref std   : 55.6520
+==============================================================================
+STEP 5a: NEH PATIENT / VOLUME STRUCTURE
+==============================================================================
+data_information.csv columns: ['Patient ID', 'Class', 'Eye', 'B-scan', 'Label', 'Directory', 'global_patient_id', 'ext', 'path']
+
+--- Patients per class, B-scans per patient ---
+  Class=CNV      n_patients=161   B-scans/patient: min=19 median=31.0 max=62
+  Class=DRUSEN   n_patients=160   B-scans/patient: min=10 median=31.0 max=62
+  Class=NORMAL   n_patients=120   B-scans/patient: min=25 median=60.0 max=62
+
+--- Eye distribution and both-eyes-present check ---
+  Eye value counts: {'OD': 8835, 'OS': 7987}
+  Patients (class,patient) with both OD and OS present: 113 of 441
+
+--- Class x Label crosstab (absolute) ---
+ Class  CNV  DRUSEN  NORMAL
+   CNV 3240    1227     781
+DRUSEN    0    3742    2136
+NORMAL    0      29    5667
+
+--- Class x Label crosstab (row-normalised %) ---
+ Class   CNV  DRUSEN  NORMAL
+   CNV 61.74   23.38   14.88
+DRUSEN  0.00   63.66   36.34
+NORMAL  0.00    0.51   99.49
+
+--- Label == Class: count and share per class ---
+  Class=CNV      Label==Class: 3240 of 5248 (61.74%)
+  Class=DRUSEN   Label==Class: 3742 of 5878 (63.66%)
+  Class=NORMAL   Label==Class: 5667 of 5696 (99.49%)
+
+--- Filtered to Label==Class only: per-class counts vs published worst-case (12,649) ---
+  CNV      computed=3240   published=3240   match=True
+  DRUSEN   computed=3742   published=3742   match=True
+  NORMAL   computed=5667   published=5667   match=True
+  Total    computed=12649  published=12649  match=True
+==============================================================================
+STEP 5b: OCTDL STRUCTURE
+==============================================================================
+
+--- Generic per-column unique-value report ---
+  eye: ['0', 'OD', 'OS']
+  sex: ['0', 'F', 'M']
+  year: 50 unique values, first 10: [0, 1931, 1934, 1935, 1937, 1938, 1939, 1940, 1941, 1942]
+  disease: ['AMD', 'DME', 'ERM', 'NO', 'RAO', 'RVO', 'VID']
+
+--- AMD subcategory breakdown ---
+ subcategory  count
+        late    717
+       early    266
+intermediate    248
+
+--- condition: AMD-only condition x subcategory crosstab ---
+    condition  early  intermediate  late
+          MNV      0             0   717
+MNV_suspected      0           248     0
+       drusen    266             0     0
+
+--- condition: disease x condition crosstab (all seven diseases) ---
+disease  DME  DRIL  ERM  ME  MH  MNV  MNV_suspected  NO  drusen  none
+    AMD    0     0    0   0   0  717            248   0     266     0
+    DME    4    17    0 126   0    0              0   0       0     0
+    ERM    0     0  155   0   0    0              0   0       0     0
+     NO    0     0    0   0   0    0              0 332       0     0
+    RAO    0     0    0   0   0    0              0   0       0    22
+    RVO    0    24    0  77   0    0              0   0       0     0
+    VID    0     0    0   0  76    0              0   0       0     0
+
+--- condition values appearing under >=2 diseases ---
+  DRIL: diseases=['DME', 'RVO'] counts={'DME': 17, 'RVO': 24}
+  ME: diseases=['DME', 'RVO'] counts={'DME': 126, 'RVO': 77}
+
+--- condition missingness (three definitions) ---
+  isna: 0   empty string: 0   literal '0': 0
+
+--- patient_id: global count and reconciliation with published per-disease sum ---
+  Global unique patient_id: 820
+  Per-disease unique patient_id: {'AMD': 421, 'DME': 107, 'ERM': 71, 'NO': 110, 'RAO': 11, 'RVO': 50, 'VID': 51}  sum=821
+  patient_id values in >=2 diseases: 1
+    4986761: ['AMD', 'DME']
+
+--- patient_id: images per patient ---
+  min=1 median=2.0 max=10
+
+--- image_width / image_hight distributions (from CSV columns) ---
+image_width                  min=     444.0  p25=     879.0  median=     882.0  p75=    1100.0  max=    1270.0
+image_hight                  min=     127.0  p25=     313.0  median=     321.0  p75=     409.0  max=     710.0
+==============================================================================
+STEP 6: DUPLICATE CHECK (full population, MD5 of file bytes)
+==============================================================================
+
+--- NEH ---
+  Category 1 (same patient, same class): 19 groups, 38 files
+  Category 2 (same class, different patients): 56 groups, 112 files
+  Category 3 (different classes): 62 groups, 124 files
+  Category 2 groups (showing up to 20 of 56):
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/147/017_CNV.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/26/017_CNV.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/017_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/017_Drusen.jpg'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/009_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/009_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/027_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/027_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/011_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/011_Drusen.jpg'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/000_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/000_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/016_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/016_Drusen.jpg'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/024_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/024_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/003_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/003_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/015_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/015_Drusen.jpg'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/012_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/012_Drusen.jpg'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/008_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/008_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/147/015_CNV.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/26/015_CNV.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/006_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/006_Drusen.jpg'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/147/020_CNV.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/26/020_CNV.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/021_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/021_Drusen.jpg'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/013_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/013_Drusen.jpg'}]
+    group: [{'global_patient_id': 'CNV_147', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/147/023_Drusen.tif'}, {'global_patient_id': 'CNV_026', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/26/023_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/005_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/005_Drusen.jpg'}]
+    group: [{'global_patient_id': 'DRUSEN_022', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/22/018_Drusen.jpg'}, {'global_patient_id': 'DRUSEN_083', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/83/018_Drusen.jpg'}]
+  Category 3 groups (showing up to 20 of 62):
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/22/017_CNV.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/017_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/006_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/006_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/022_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/022_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/005_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/005_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/026_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/026_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'NORMAL', 'Directory': 'CNV/22/006_Normal.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/006_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/016_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/016_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/22/011_CNV.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/011_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/22/022_CNV.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/022_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/22/013_CNV.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/013_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'NORMAL', 'Directory': 'CNV/22/004_Normal.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'NORMAL', 'Directory': 'DRUSEN/69/004_Normal.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/030_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/030_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'NORMAL', 'Directory': 'CNV/22/002_Normal.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'NORMAL', 'Directory': 'DRUSEN/69/002_Normal.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/22/009_CNV.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/009_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/22/030_Drusen.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/030_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'CNV', 'Directory': 'CNV/22/018_CNV.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/018_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'NORMAL', 'Directory': 'DRUSEN/17/010_Normal.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'NORMAL', 'Directory': 'NORMAL/34/010_Normal.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/023_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/023_Drusen.tif'}]
+    group: [{'global_patient_id': 'CNV_022', 'Class': 'CNV', 'Label': 'DRUSEN', 'Directory': 'CNV/22/027_Drusen.tif'}, {'global_patient_id': 'DRUSEN_069', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/69/027_Drusen.tif'}]
+    group: [{'global_patient_id': 'DRUSEN_017', 'Class': 'DRUSEN', 'Label': 'DRUSEN', 'Directory': 'DRUSEN/17/018_Drusen.tif'}, {'global_patient_id': 'NORMAL_034', 'Class': 'NORMAL', 'Label': 'DRUSEN', 'Directory': 'NORMAL/34/018_Drusen.tif'}]
+
+--- OCTDL ---
+  Category 1 (same patient, same class): 1 groups, 2 files
+  Category 2 (same class, different patients): 0 groups, 0 files
+  Category 3 (different classes): 0 groups, 0 files

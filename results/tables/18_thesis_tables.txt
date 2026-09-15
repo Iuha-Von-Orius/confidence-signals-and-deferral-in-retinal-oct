@@ -1,0 +1,47 @@
+==============================================================================
+18_thesis_tables.py -- thesis-format result tables (source x condition)
+==============================================================================
+
+Pure re-shape: every value below is read from an existing table, not recomputed. No metric value or regression-check target is a Python literal in this script -- the two mean-rank targets are parsed out of 15_augrc.txt / 15b_grc.txt at runtime.
+
+------------------------------------------------------------------------------
+Regression checks (run before any output file is written)
+------------------------------------------------------------------------------
+1a. rank_augrc reuse: dense_rank(source, augrc) recomputed on 15_augrc.csv vs its own rank_augrc column -- PASS (0 mismatches of 45 rows)
+1b. rank_augrc_window reuse: dense_rank(source, augrc_window) recomputed on 15b_augrc_window.csv vs its own rank_augrc_window column, non-blank rows only -- PASS (0 mismatches of 40 non-blank rows)
+
+2a. T21 mean_rank vs 15_augrc.txt's '(b) like-for-like' targets:
+    condition 2: computed=2.8750  target=2.8750  PASS
+    condition 3: computed=2.2500  target=2.2500  PASS
+    condition 4: computed=4.5000  target=4.5000  PASS
+    condition 5: computed=2.6250  target=2.6250  PASS
+    condition B2: computed=2.7500  target=2.7500  PASS
+2b. T23 mean_rank vs 15b_grc.txt's window-rank targets:
+    condition 2: computed=2.8750  target=2.8750  PASS
+    condition 3: computed=2.2500  target=2.2500  PASS
+    condition 4: computed=3.8750  target=3.8750  PASS
+    condition 5: computed=1.8750  target=1.8750  PASS
+    condition B2: computed=2.5000  target=2.5000  PASS
+
+------------------------------------------------------------------------------
+Provenance
+------------------------------------------------------------------------------
+T20 18_T20_backbone_no_deferral.csv -- n/vendor from 13c_T01_source_summary.csv; macro_f1/f1_{class} computed from 13c_T02_confusion_<source>.csv's own TP/FP/FN per class (row total > 0 only), cross-checked against sklearn.metrics.f1_score on an expanded sample list (see per-source detail below); blank for the five sources with no T02 file; miss_rate from 13c_T09_accepted_set_stats.csv's condition==1 row; risk_definition from 14_T13_expected_cost.csv's condition==1 row.
+  Kermany-test: classes scored = ['CNV', 'DME', 'DRUSEN', 'NORMAL'] (row total > 0 in 13c_T02_confusion_Kermany-test.csv); f1 = {CNV: 0.9938, DME: 1.0000, DRUSEN: 0.9938, NORMAL: 1.0000}; macro_f1 = 0.9969 (hand-computed == sklearn, checked above)
+  Rasti: classes scored = ['DME', 'DRUSEN', 'NORMAL'] (row total > 0 in 13c_T02_confusion_Rasti.csv); f1 = {DME: 0.8986, DRUSEN: 0.6210, NORMAL: 0.8335}; macro_f1 = 0.7844 (hand-computed == sklearn, checked above)
+  NEH: classes scored = ['CNV', 'DRUSEN', 'NORMAL'] (row total > 0 in 13c_T02_confusion_NEH.csv); f1 = {CNV: 0.8074, DRUSEN: 0.6833, NORMAL: 0.8841}; macro_f1 = 0.7916 (hand-computed == sklearn, checked above)
+  OCTDL-in-label: classes scored = ['CNV', 'DME', 'DRUSEN', 'NORMAL'] (row total > 0 in 13c_T02_confusion_OCTDL-in-label.csv); f1 = {CNV: 0.9255, DME: 0.8850, DRUSEN: 0.7630, NORMAL: 0.9601}; macro_f1 = 0.8834 (hand-computed == sklearn, checked above)
+T21 18_T21_augrc.csv -- base_error/augrc_x1000 from 15_augrc.csv; rank_{c} is that file's own rank_augrc column, reused after check 1a.
+T22 18_T22_matched_coverage.csv -- baseline_error/accepted_error_rate from 14_T16_matched_coverage.csv; rank_{c} computed fresh here (dense_rank), not reused, since no matched-coverage rank exists anywhere else in the pipeline.
+T23 18_T23_augrc_window.csv -- base_error/augrc_window_x1000 from 15b_augrc_window.csv; rank_{c} is that file's own rank_augrc_window column, reused after check 1b.
+T24 18_T24_operating_point.csv -- coverage_{c} (=1-deferral_rate) and selective_risk_{c} (=accepted_error_rate) from 14_T13_expected_cost.csv; rank_{c} computed fresh here (dense_rank on selective_risk), condition 1 excluded from ranking as the baseline.
+
+------------------------------------------------------------------------------
+Mean-rank exclusions (derived from each table's own data)
+------------------------------------------------------------------------------
+  T21: excluded ['OCTDL-ambiguous'] (that source's 15_augrc.csv base_error is 0)
+  T22: excluded ['OCTDL-ambiguous'] (that source's 14_T16_matched_coverage.csv baseline_error is 0)
+  T23: excluded ['OCTDL-ambiguous'] (that source's 15b_augrc_window.csv base_error is 0)
+  T24: excluded ['OCTDL-ambiguous'] (that source's 14_T13_expected_cost.csv condition==1 accepted_error_rate is 0)
+
+Wall-clock runtime: 0.1 s

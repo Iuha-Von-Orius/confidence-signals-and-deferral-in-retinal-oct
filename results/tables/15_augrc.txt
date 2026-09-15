@@ -1,0 +1,145 @@
+==============================================================================
+15_augrc.py -- AUGRC, nine sources x five conditions
+==============================================================================
+
+Imported from 09_aurc.py: per_sample_curve (09:160-201), reused unmodified for generalized_risk = selective_risk * coverage.
+Imported from 13c_evaluate_all_sources.py: SOURCES_ORDER, CONDITIONS_AURC, load_merged_df, correct_for, risk_definition_for, risk_score_for, SOURCE_COLOURS_13C, CLASSES.
+NOT imported: aurc_trapezoid (09:204-218) -- it starts integration at index 1, skipping [0, 1/n], because selective risk is undefined (0/0) at coverage 0. Generalized risk is defined there (0/n = 0), so that interval must be included, not skipped -- a new function, augrc_trapezoid, does the full 0-to-1 trapezoid sum instead.
+NOT imported: condition display colours -- this project's existing convention (07_policy.py, 08c_evaluate.py, 14) redeclares this same fixed dict per script rather than importing it cross-script.
+
+------------------------------------------------------------------------------
+AUGRC-rank vs AURC-rank, per source
+------------------------------------------------------------------------------
+  Kermany-test:
+    condition  augrc_x1000  rank_augrc aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2     0.028281           2   0.028444          2              0.018251
+            3     0.031483           3   0.031699          3              0.020317
+            4     1.557591           5   3.112005          5              1.005165
+            5     0.032550           4   0.032764          4              0.021006
+           B2     0.011206           1   0.011227          1              0.007231
+  RETOUCH-Spectralis:
+    condition  augrc_x1000  rank_augrc aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2     2.928251           3   3.363096          3              0.400585
+            3     2.321227           2   3.075148          2              0.317544
+            4     5.390548           5  10.427716          5              0.737427
+            5     1.885195           1   2.208982          1              0.257895
+           B2     3.240313           4   4.703729          4              0.443275
+  RETOUCH-Cirrus:
+    condition  augrc_x1000  rank_augrc aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2    15.273930           2  30.884058          2              0.614551
+            3    19.480353           3  36.877154          3              0.783798
+            4    25.798536           5  51.482836          5              1.038012
+            5    13.025375           1   20.12813          1               0.52408
+           B2    20.395164           4  41.074769          4              0.820605
+  RETOUCH-Topcon:
+    condition  augrc_x1000  rank_augrc  aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2    39.832914           2   63.579723          2              0.737478
+            3    41.099870           3   66.831823          3              0.760935
+            4    52.383402           4  104.350041          4              0.969841
+            5    60.370942           5  145.376239          5              1.117725
+           B2    38.766004           1    62.45044          1              0.717725
+  Rasti:
+    condition  augrc_x1000  rank_augrc  aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2    65.834134           4  103.415549          3              0.598574
+            3    59.394981           1   86.961267          1              0.540028
+            4    81.555937           5  158.433834          5              0.741519
+            5    62.432647           2  103.116456          2              0.567647
+           B2    65.008139           3  106.752075          4              0.591064
+  NEH:
+    condition  augrc_x1000  rank_augrc  aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2    83.744067           5  174.177165          5              0.869417
+            3    57.038235           1   90.353147          1              0.592162
+            4    77.632991           4  149.860621          4              0.805973
+            5    66.698288           3  141.950917          3              0.692451
+           B2    57.935405           2   94.108039          2              0.601476
+  OCTDL-in-label:
+    condition  augrc_x1000  rank_augrc aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2    28.980174           4  47.848143          4              0.609626
+            3    21.155408           1  29.153336          1              0.445025
+            4    32.477810           5  66.674364          5              0.683202
+            5    23.929282           3  39.919072          2              0.503376
+           B2    23.788459           2  40.183485          3              0.500413
+  OCTDL-ambiguous:
+    condition  augrc_x1000  rank_augrc           aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2          0.0           1 undefined (0 errors)       <NA>  undefined (0 errors)
+            3          0.0           1 undefined (0 errors)       <NA>  undefined (0 errors)
+            4          0.0           1 undefined (0 errors)       <NA>  undefined (0 errors)
+            5          0.0           1 undefined (0 errors)       <NA>  undefined (0 errors)
+           B2          0.0           1 undefined (0 errors)       <NA>  undefined (0 errors)
+  OCTDL-novel-class:
+    condition  augrc_x1000  rank_augrc  aurc_x1000  rank_aurc augrc_ratio_vs_random
+            2    65.378723           1  139.489521          1              0.661259
+            3    82.311915           4  144.366992          2              0.832526
+            4    80.468575           3  162.765249          4              0.813882
+            5    79.287561           2  173.143476          5              0.801937
+           B2    88.875323           5  162.170437          3               0.89891
+
+------------------------------------------------------------------------------
+augrc_ratio_vs_random = augrc / (base_error / 2.0) -- base_error/2 is the AUGRC of a random-ranking baseline on the same source (selective risk = base_error at every coverage if risk_score is independent of correctness, so generalized_risk = base_error * coverage, integrating to base_error/2 over [0,1]). "undefined (0 errors)" wherever base_error is 0, same convention as 13c's zero-error rows.
+Caveat: where n_errors < 10, this ratio is noise-dominated -- not removed or blanked on that basis, n_errors listed below so this can be judged directly.
+------------------------------------------------------------------------------
+  Kermany-test: n=968  n_errors=3  [< 10 errors -- ratio noise-dominated]
+  RETOUCH-Spectralis: n=342  n_errors=5  [< 10 errors -- ratio noise-dominated]
+  RETOUCH-Cirrus: n=342  n_errors=17
+  RETOUCH-Topcon: n=324  n_errors=35
+  Rasti: n=1332  n_errors=293
+  NEH: n=16803  n_errors=3237
+  OCTDL-in-label: n=1462  n_errors=139
+  OCTDL-ambiguous: n=248  n_errors=0  [< 10 errors -- ratio noise-dominated]
+  OCTDL-novel-class: n=354  n_errors=70
+
+------------------------------------------------------------------------------
+Rank mismatches ((source, condition) where rank_augrc != rank_aurc)
+------------------------------------------------------------------------------
+  Rasti, condition 2: rank_augrc=4  rank_aurc=3
+  Rasti, condition B2: rank_augrc=3  rank_aurc=4
+  OCTDL-in-label, condition 5: rank_augrc=3  rank_aurc=2
+  OCTDL-in-label, condition B2: rank_augrc=2  rank_aurc=3
+  OCTDL-novel-class, condition 3: rank_augrc=4  rank_aurc=2
+  OCTDL-novel-class, condition 4: rank_augrc=3  rank_aurc=4
+  OCTDL-novel-class, condition 5: rank_augrc=2  rank_aurc=5
+  OCTDL-novel-class, condition B2: rank_augrc=5  rank_aurc=3
+
+------------------------------------------------------------------------------
+Per-condition mean rank -- three sections, not directly comparable to each other except (b) internally (see docstring Patch log): the original single mean_rank_augrc-over-9-sources vs mean_rank_aurc-over-8-sources comparison averaged over two different source sets.
+------------------------------------------------------------------------------
+(a) mean rank_augrc over all n_sources=9 sources (AURC not usable on this source set -- undefined for ['OCTDL-ambiguous']):
+    condition 2: mean rank_augrc=2.6667
+    condition 3: mean rank_augrc=2.1111
+    condition 4: mean rank_augrc=4.1111
+    condition 5: mean rank_augrc=2.4444
+    condition B2: mean rank_augrc=2.5556
+
+(b) like-for-like: mean rank over the n_sources=8 sources with >=1 error (excluded=['OCTDL-ambiguous']), AUGRC and AURC both computed on this same source set:
+    condition 2: mean rank_augrc=2.8750  mean rank_aurc=2.7500
+    condition 3: mean rank_augrc=2.2500  mean rank_aurc=2.0000
+    condition 4: mean rank_augrc=4.5000  mean rank_aurc=4.6250
+    condition 5: mean rank_augrc=2.6250  mean rank_aurc=2.8750
+    condition B2: mean rank_augrc=2.7500  mean rank_aurc=2.7500
+
+(c) n_sources: (a)=9 sources, excluded=none; (b)=8 sources, excluded=['OCTDL-ambiguous']
+
+Self-check identity: sum over the 5 conditions of (a)'s mean rank_augrc should equal (the grand sum of rank_augrc over all of (b)'s rows, plus the excluded sources' own rank_augrc contribution) / len(SOURCES_ORDER) -- a decomposition of (a)'s total across the same two source subsets (b) already separates, computed via a different code path (per-condition .mean() vs a single grand .sum()) so a bug in either would surface here.
+  excluded sources' rank_augrc contribution (data-derived, expected 5 if every excluded source ties at rank 1 in all 5 conditions): 5.0
+  LHS (sum of (a)'s 5 per-condition means) = 13.888889
+  RHS ((b)'s rank_augrc grand sum 120.0 + 5.0) / 9 = 13.888889
+  Equal: True
+
+------------------------------------------------------------------------------
+Usage limitation (stated exactly, not derived further)
+------------------------------------------------------------------------------
+AUGRC scales with base_error the same way AURC does, so only within-source condition comparisons are valid; cross-source absolute comparisons are not.
+
+------------------------------------------------------------------------------
+OCTDL-ambiguous
+------------------------------------------------------------------------------
+base_error = 0 under the missed-disease definition (0 of 248 rows predicted NORMAL). augrc = 0.0 for all five conditions is a defined result (generalized risk's integrand is 0/n = 0 throughout, never a 0/0), not a degenerate or "perfect" one -- it reflects the absence of any error to detect, not a claim about ranking quality.
+
+------------------------------------------------------------------------------
+Figures
+------------------------------------------------------------------------------
+15_F21_augrc_heatmap.png -- AUGRC, source x condition, [0,0.5] scale.
+15_F22_augrc_vs_aurc.png -- scatter, aurc_x1000 vs augrc_x1000, coloured by condition, marker shape by source, black ring = rank mismatch; OCTDL-ambiguous excluded (aurc undefined).
+15_F23_generalized_risk_curves.png -- one panel per source, five generalized-risk-vs-coverage curves each.
+
+Wall-clock runtime: 1.0 s

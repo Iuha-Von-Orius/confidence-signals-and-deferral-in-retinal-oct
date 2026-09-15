@@ -1,0 +1,16 @@
+positive,negative,signal,auroc
+OCTDL-in-label,Kermany-test,ood_cosine,0.8300217069337825
+OCTDL-ambiguous,Kermany-test,ood_cosine,0.7749933351106371
+OCTDL-novel-class,Kermany-test,ood_cosine,0.9798524536583089
+OCTDL-in-label,Kermany-test,ood_maha_combined,0.999597941232999
+OCTDL-ambiguous,Kermany-test,ood_maha_combined,0.9997875566515596
+OCTDL-novel-class,Kermany-test,ood_maha_combined,0.9990924265770182
+OCTDL-in-label,Kermany-test,softmax_confidence,0.5838027551977932
+OCTDL-ambiguous,Kermany-test,softmax_confidence,0.5276155525193281
+OCTDL-novel-class,Kermany-test,softmax_confidence,0.8887361675304664
+OCTDL-in-label,Kermany-test,mutual_info,0.6540478626584211
+OCTDL-ambiguous,Kermany-test,mutual_info,0.583406924820048
+OCTDL-novel-class,Kermany-test,mutual_info,0.9372665405985899
+OCTDL-in-label,Kermany-test,cp_setsize,0.5367558733083855
+OCTDL-ambiguous,Kermany-test,cp_setsize,0.5437883231138363
+OCTDL-novel-class,Kermany-test,cp_setsize,0.6401383830601859

@@ -1,0 +1,147 @@
+==============================================================================
+16_verify_dataset_counts.py -- independent recount of Table 5.1
+==============================================================================
+
+Every count below is computed directly from the raw datasets on disk.
+Pipeline output tables are read only in Section 5, as the thing being
+checked -- never as a source for the counts themselves.
+
+------------------------------------------------------------------------------
+SECTION 1: independent counts
+------------------------------------------------------------------------------
+
+Kermany (Dataset/Paul_Mooney/OCT2017)
+  train  CNV=37205 DME=11348 DRUSEN=8616 NORMAL=26315  total=83484  expected=83484  match=True
+  val    CNV=8 DME=8 DRUSEN=8 NORMAL=8  total=32  expected=32  match=True
+  test   CNV=242 DME=242 DRUSEN=242 NORMAL=242  total=968  expected=968  match=True
+  Grand total: 83484 (train) + 968 (test) + 32 (val) = 84484  (expected 84,484)
+
+RETOUCH (Dataset/RETOUCH) -- volumes (oct.mhd)
+  Cirrus      n=38   expected=38   match=True
+  Spectralis  n=38   expected=38   match=True
+  Topcon      n=36   expected=36   match=True
+  Total       n=112  expected=112  match=True
+
+OCT5k/Rasti (Dataset/Macular-Dataset-R.Rasti_old) -- volumes (*.E2E)
+  AMD      n=48   expected=48   match=True
+  DME      n=50   expected=50   match=True
+  Normal   n=50   expected=50   match=True
+  Total    n=148  expected=148  match=True
+
+NEH (data_information.csv)
+  Rows before dedup: 16822   after dedup: 16803
+  Unique global_patient_id (post-dedup): 441
+  Class (folder) distribution, post-dedup:
+    CNV      n=5238   expected=5238   match=True
+    DRUSEN   n=5869   expected=5869   match=True
+    NORMAL   n=5696   expected=5696   match=True
+  Label (ground truth) distribution, post-dedup -- a DIFFERENT grouping of the same rows:
+    CNV      n=3234   expected=3234   match=True
+    DRUSEN   n=4992   expected=4992   match=True
+    NORMAL   n=8577   expected=8577   match=True
+
+OCTDL (OCTDL_labels.csv), independent three-tier mapping
+  in-label     n=1462   expected=1462   match=True  unique patient_id=560
+  ambiguous    n=248    expected=248    match=True  unique patient_id=79
+  novel-class  n=354    expected=354    match=True  unique patient_id=183
+  Total        n=2064   expected=2064
+  Unique patient_id, all tiers combined: 820
+
+------------------------------------------------------------------------------
+SECTION 2: volume slice-count audit (precondition for the x9 check, plus a published-total comparison)
+------------------------------------------------------------------------------
+
+RETOUCH -- per-volume slice count distribution
+  min=49  max=128  distinct values (value:n_volumes): 49:38, 64:2, 128:72
+  assert min >= 9: PASS
+  Sum of all volumes' slice counts: 11206
+  Published total (Bogunovic et al., IEEE TMI 2019, pp.3, 5): 11334
+  Difference: 128 -- printed for the record, not interpreted or reconciled.
+
+OCT5k/Rasti -- per-volume slice count distribution
+  min=20  max=62  distinct values (value:n_volumes): 20:79, 26:16, 32:29, 38:1, 62:23
+  assert min >= 9: PASS
+  Volumes using the PNG fallback (zero TIFF matches): 5 -- ['AMD (15).E2E', 'AMD (16).E2E', 'AMD (17).E2E', 'AMD (18).E2E', 'AMD (19).E2E']
+  Sum of all volumes' slice counts: 4388
+  Published per-volume counts (Rasti et al., IEEE TMI 2018, 37(4):1024-1034, p.1026): [19, 25, 31, 61], published total: 4142
+  Difference (total): -246 -- printed for the record, not interpreted or reconciled.
+
+------------------------------------------------------------------------------
+SECTION 3: splits/ integrity check (the LOCKED train/val/calibration/test partition)
+------------------------------------------------------------------------------
+
+Pairwise disjointness
+  train n val: 0 shared paths -- PASS
+  train n calibration: 0 shared paths -- PASS
+  val n calibration: 0 shared paths -- PASS
+  (train u val u calibration) n test: 0 shared paths -- PASS
+
+train+val+calibration = 70484 + 5000 + 8000 = 83484, vs Section 1's independent Kermany-train count 83484 -- PASS
+test.csv rows = 968, vs Section 1's independent Kermany-test count 968 -- PASS
+
+------------------------------------------------------------------------------
+SECTION 4: comparison against published figures (the one genuinely external check -- neither side of this section is pipeline output)
+------------------------------------------------------------------------------
+
+OCTDL disease-level counts vs the OCTDL dataset paper's Table 2 (Scientific Data, 2024)
+  AMD   n=1231   published=1231   MATCH
+  DME   n=147    published=147    MATCH
+  ERM   n=155    published=155    MATCH
+  NO    n=332    published=332    MATCH
+  RAO   n=22     published=22     MATCH
+  RVO   n=101    published=101    MATCH
+  VID   n=76     published=76     MATCH
+
+AMD condition breakdown -- the single most important check of the three-tier split's correctness
+  drusen         n=266    published=266    match=True
+  MNV            n=717    published=717    match=True
+  MNV_suspected  n=248    published=248    match=True
+  Sum: 266 + 717 + 248 = 1231  (expected 1231)
+  AMD condition value set: ['MNV', 'MNV_suspected', 'drusen']  (expected exactly ['MNV', 'MNV_suspected', 'drusen'])
+
+NEH published patient counts (Sotoudeh-Paima et al., Comput Biol Med 144 (2022) 105368)
+  CNV      n=161  published=161  match=True
+  DRUSEN   n=160  published=160  match=True
+  NORMAL   n=120  published=120  match=True
+  Total    n=441  published=441  match=True
+
+------------------------------------------------------------------------------
+SECTION 5: comparison against pipeline output (13a_new_ood_manifest.csv, 13b_new_slice_scores.csv, 13c_T01_source_summary.csv -- read ONLY here, as the thing being checked)
+------------------------------------------------------------------------------
+
+OCTDL row-by-row mapping consistency: this script's independent octdl_label() vs 13a_new_ood_manifest.csv's recorded true_label/true_label_name/label_group, joined on file_name (2064 rows)
+  0 of 2064 rows disagree -- PASS
+
+quantity                                       independent     pipeline verdict
+Kermany train images                                 83484          n/a n/a (pipeline never materialises this quantity)
+Kermany val images                                      32          n/a n/a (pipeline never materialises this quantity)
+Kermany test images                                    968          968 MATCH
+Kermany total images (84,484)                        84484          n/a n/a (pipeline never materialises this quantity)
+RETOUCH-Cirrus volumes                                  38           38 MATCH
+RETOUCH-Cirrus slices (volumes x9)                     342          342 MATCH
+RETOUCH-Spectralis volumes                              38           38 MATCH
+RETOUCH-Spectralis slices (volumes x9)                 342          342 MATCH
+RETOUCH-Topcon volumes                                  36           36 MATCH
+RETOUCH-Topcon slices (volumes x9)                     324          324 MATCH
+Rasti volumes                                          148          148 MATCH
+Rasti slices (volumes x9)                             1332         1332 MATCH
+NEH deduped rows                                     16803        16803 MATCH
+NEH unique patients                                    441          441 MATCH
+NEH Class=CNV (folder)                                5238         5238 MATCH
+NEH Class=DRUSEN (folder)                             5869         5869 MATCH
+NEH Class=NORMAL (folder)                             5696         5696 MATCH
+NEH Label=CNV (ground truth)                          3234         3234 MATCH
+NEH Label=DRUSEN (ground truth)                       4992         4992 MATCH
+NEH Label=NORMAL (ground truth)                       8577         8577 MATCH
+OCTDL in-label rows                                   1462         1462 MATCH
+OCTDL in-label unique patients                         560          560 MATCH
+OCTDL ambiguous rows                                   248          248 MATCH
+OCTDL ambiguous unique patients                         79           79 MATCH
+OCTDL novel-class rows                                 354          354 MATCH
+OCTDL novel-class unique patients                      183          183 MATCH
+OCTDL overall unique patients (all tiers)              820          820 MATCH
+
+------------------------------------------------------------------------------
+No mismatches found in any comparison section.
+------------------------------------------------------------------------------
+Wall-clock runtime: 2.6 s

@@ -1,0 +1,129 @@
+==============================================================================
+13b_score_new_ood.py -- NEH + OCTDL scoring
+==============================================================================
+
+Imported from 08b_score_ood.py (via importlib):
+  CLASSES/N_CLASSES (08b:41-42), CACHE/TABDIR (08b:37,39), cosine_score (08b:59-63), mahalanobis_score (08b:66-78),
+  score_detectors (08b:81-98), mutual_information (08b:101-109), compute_cp_setsize (08b:112-120), apply_policy (08b:124-133),
+  apply_b2 (08b:136-138), load_frozen_params (08b:142-146), regression_test (08b:149-164), build_slice_table (08b:168-206),
+  build_retouch_index/build_oct5k_index (08b:220-238, regression test only).
+Not imported (written fresh here): NEH/OCTDL index construction, the RETOUCH/OCT5k-vs-08b_slice_scores.csv diff, grouped statistics, prediction verdicts, NEH confusion matrix -- none exist in 08b.
+
+------------------------------------------------------------------------------
+Frozen parameter files
+------------------------------------------------------------------------------
+  /Users/yuhaowang/Documents/UCL/Term3_Proj/Project/cache/ood_params.npz   mtime=2026-08-21 17:14:13
+  /Users/yuhaowang/Documents/UCL/Term3_Proj/Project/cache/conformal_params.json   mtime=2026-08-23 00:13:10
+  /Users/yuhaowang/Documents/UCL/Term3_Proj/Project/cache/policy_params.json   mtime=2026-08-24 22:58:50
+  q_mondrian[0.02] = {'CNV': 0.2780405879020691, 'DME': 0.9913704991340637, 'DRUSEN': 0.9996994137763977, 'NORMAL': 0.06814110279083252}
+  selected_cost_ratio = 20
+  condition 2: features=['ood_cosine', 'ood_maha_combined']  w=[-4.941868456198204, 1.1452930453090917]  b=-5.502338
+  condition 3: features=['mutual_info']  w=[6.310802843020651]  b=-2.999700
+  condition 4: features=['cp_setsize']  w=[2.344641389431896]  b=-6.837978
+  condition 5: features=['ood_cosine', 'ood_maha_combined', 'mutual_info', 'cp_setsize']  w=[-1.7715272236915798, 1.3305454964212458, 3.5718005443429965, 1.0708431199709787]  b=-5.125154
+  B2 threshold @ ratio 20 = 0.999812
+  NEH/OCTDL never enter any fit/whitening/quantile-estimation/threshold-search step -- pure application-time inputs.
+
+------------------------------------------------------------------------------
+Regression tests
+------------------------------------------------------------------------------
+Layer 1: 08b's own test-split gate (imported regression_test)
+       signal  computed_mean  computed_std  reference_mean  reference_std  pass
+       cosine         0.7931        0.1087          0.7931         0.1087  True
+maha_combined         0.1886        0.5513          0.1890         0.5510  True
+  PASS=True
+
+Layer 2: RETOUCH/OCT5k rebuilt via this script's own call to build_slice_table, diffed against 08b_slice_scores.csv's already-recorded rows for those sources. Reported for the record, not a pass/fail gate (unlike Layer 1) -- see note below.
+  RETOUCH: n_computed=1008  n_reference=1008
+    path alignment: 0 of 1008 rows mismatched  (all aligned)
+    predicted_class        max_abs_diff = 0.000e+00
+    softmax_confidence     max_abs_diff = 2.969e-08
+    mutual_info            max_abs_diff = 1.411e-08
+    ood_cosine             max_abs_diff = 2.927e-08
+    ood_maha_combined      max_abs_diff = 9.344e-07
+    cp_setsize             max_abs_diff = 0.000e+00
+    s_condition2           max_abs_diff = 1.854e-06
+    s_condition3           max_abs_diff = 2.888e-06
+    s_condition4           max_abs_diff = 1.885e-07
+    s_condition5           max_abs_diff = 1.880e-06
+    defer_condition2       mismatched rows = 0 of 1008
+    defer_condition3       mismatched rows = 0 of 1008
+    defer_condition4       mismatched rows = 0 of 1008
+    defer_condition5       mismatched rows = 0 of 1008
+    defer_B2               mismatched rows = 0 of 1008
+  OCT5k: n_computed=1332  n_reference=1332
+    path alignment: 0 of 1332 rows mismatched  (all aligned)
+    predicted_class        max_abs_diff = 0.000e+00
+    softmax_confidence     max_abs_diff = 2.978e-08
+    mutual_info            max_abs_diff = 7.204e-09
+    ood_cosine             max_abs_diff = 2.975e-08
+    ood_maha_combined      max_abs_diff = 4.711e-07
+    cp_setsize             max_abs_diff = 0.000e+00
+    s_condition2           max_abs_diff = 1.007e-06
+    s_condition3           max_abs_diff = 3.691e-06
+    s_condition4           max_abs_diff = 1.885e-07
+    s_condition5           max_abs_diff = 1.842e-06
+    defer_condition2       mismatched rows = 0 of 1332
+    defer_condition3       mismatched rows = 0 of 1332
+    defer_condition4       mismatched rows = 0 of 1332
+    defer_condition5       mismatched rows = 0 of 1332
+    defer_B2               mismatched rows = 0 of 1332
+  Layer 2 bitwise-exact (diff < 1e-9 on every float column, 0 row/decision mismatches everywhere): RETOUCH=False  OCT5k=False
+  Note: path alignment is 0/0 mismatched and every predicted_class/cp_setsize/defer_*/accept_* column matches with 0 disagreements in both cases above -- the float columns' differences (where present) are all at or below ~4e-6, reported as measured, not adjusted for, and not gating this script's own run (only Layer 1, which is designed as a hard stop in 08b, gates below).
+
+------------------------------------------------------------------------------
+Grouped statistics: mean/std of ood_cosine, ood_maha_combined, softmax_confidence, mutual_info, cp_setsize
+------------------------------------------------------------------------------
+NEH / OCTDL, by (dataset, label_group):
+                    ood_cosine        ood_maha_combined        softmax_confidence        mutual_info        cp_setsize       
+                          mean    std              mean    std               mean    std        mean    std       mean    std
+dataset label_group                                                                                                          
+NEH     in-label        0.3789 0.2371           -5.8991 6.9157             0.9478 0.1182      0.0490 0.0733     1.3233 0.5083
+OCTDL   ambiguous       0.6375 0.1820           -6.9111 4.5591             0.9803 0.0696      0.0263 0.0676     1.0927 0.2907
+        in-label        0.5685 0.2070           -6.8073 4.3327             0.9858 0.0580      0.0226 0.0568     1.0807 0.2848
+        novel-class     0.4083 0.1508           -6.6553 4.5004             0.9475 0.1138      0.0736 0.0933     1.3079 0.5145
+
+Reference -- existing 08b sources, by (dataset, vendor):
+                        ood_cosine        ood_maha_combined        softmax_confidence        mutual_info        cp_setsize       
+                              mean    std              mean    std               mean    std        mean    std       mean    std
+dataset      vendor                                                                                                              
+Kermany-test Kermany        0.7931 0.1087            0.1886 0.5516             0.9959 0.0398      0.0021 0.0133     1.0052 0.0717
+OCT5k        Spectralis     0.5537 0.1691           -3.3536 2.3416             0.9618 0.0967      0.0369 0.0653     1.1712 0.4093
+RETOUCH      Cirrus         0.5828 0.1685           -3.7110 1.1959             0.9801 0.0728      0.0166 0.0495     1.0439 0.2319
+             Spectralis     0.5971 0.2155           -0.5526 0.5539             0.9812 0.0736      0.0147 0.0407     1.1462 0.3931
+             Topcon         0.4913 0.1648          -23.0609 2.0902             0.9567 0.1063      0.0484 0.0854     1.0556 0.2294
+
+------------------------------------------------------------------------------
+Pre-registered predictions (13a's docstring) -- mechanical verdicts only
+------------------------------------------------------------------------------
+Prediction 1: OCTDL novel-class ood_maha_combined mean < OCTDL in-label mean (lower = further OOD, since higher = more in-distribution)
+  in-label mean=-6.8073   novel-class mean=-6.6553
+  VERDICT: False
+  Gap between the two group means: 0.1520. For reference, across this project's seven sources, ood_maha_combined means range from Kermany-test (+0.1886) to RETOUCH-Topcon (-23.0609), a span of 23.2495.
+
+Prediction 2: OCTDL overall ood_maha_combined mean (no inequality judged)
+  OCTDL overall mean=-6.7937   RETOUCH-Topcon mean=-23.0609   RETOUCH-Spectralis mean=-0.5526
+
+Prediction 3: NEH ood_maha_combined mean close to RETOUCH-Spectralis, far from RETOUCH-Topcon
+  NEH mean=-5.8991   RETOUCH-Topcon mean=-23.0609   RETOUCH-Spectralis mean=-0.5526
+  VERDICT (NEH_mean > Topcon_mean, i.e. materially less OOD than Topcon): True
+  VERDICT (|NEH_mean - Spectralis_mean| < |NEH_mean - Topcon_mean|, i.e. closer to Spectralis than to Topcon): True
+
+Prediction 4: NEH DRUSEN accuracy > OCT5k/Rasti DRUSEN accuracy
+  OCT5k/Rasti DRUSEN accuracy = 0.4514 (195/432)
+  NEH DRUSEN accuracy = 0.5601
+  VERDICT: True
+
+  NEH per-class accuracy (NEH has no DME ground truth -- row is structurally empty, not silently absent):
+    CNV      n=3234   accuracy=0.9304
+    DME      n=0      accuracy=n/a (no ground truth)
+    DRUSEN   n=4992   accuracy=0.5601
+    NORMAL   n=8577   accuracy=0.9049
+
+  NEH confusion matrix (rows=true_label_name, columns=predicted_class_name):
+predicted_class_name   CNV  DME  DRUSEN  NORMAL
+true_label_name                                
+CNV                   3009   66      87      72
+DME                      0    0       0       0
+DRUSEN                 987   62    2796    1147
+NORMAL                 224  283     309    7761

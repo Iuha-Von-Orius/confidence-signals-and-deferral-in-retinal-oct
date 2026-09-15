@@ -1,0 +1,17 @@
+source,true_state,pred_state,n
+Kermany-test,Disease,Disease,726
+Kermany-test,Disease,Normal,0
+Kermany-test,Normal,Disease,0
+Kermany-test,Normal,Normal,242
+Rasti,Disease,Disease,740
+Rasti,Disease,Normal,142
+Rasti,Normal,Disease,27
+Rasti,Normal,Normal,423
+NEH,Disease,Disease,7007
+NEH,Disease,Normal,1219
+NEH,Normal,Disease,816
+NEH,Normal,Normal,7761
+OCTDL-in-label,Disease,Disease,1110
+OCTDL-in-label,Disease,Normal,20
+OCTDL-in-label,Normal,Disease,7
+OCTDL-in-label,Normal,Normal,325

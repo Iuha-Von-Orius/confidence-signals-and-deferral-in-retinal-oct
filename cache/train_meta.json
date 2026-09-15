@@ -1,0 +1,19 @@
+{
+  "split": "train",
+  "n_images": 70484,
+  "feature_dims": [
+    16,
+    32,
+    48,
+    112,
+    192,
+    1280
+  ],
+  "img_size": 260,
+  "batch_size": 64,
+  "model": "tf_efficientnetv2_b0",
+  "drop_rate": 0.3,
+  "drop_path_rate": 0.2,
+  "seed": 42,
+  "seconds": 545.4
+}

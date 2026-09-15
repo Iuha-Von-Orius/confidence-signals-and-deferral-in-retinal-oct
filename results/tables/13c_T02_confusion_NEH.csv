@@ -1,0 +1,5 @@
+true_label_name,pred_CNV_n,pred_DME_n,pred_DRUSEN_n,pred_NORMAL_n,pred_CNV_pct,pred_DME_pct,pred_DRUSEN_pct,pred_NORMAL_pct
+CNV,3009,66,87,72,93.04,2.04,2.69,2.23
+DME,0,0,0,0,,,,
+DRUSEN,987,62,2796,1147,19.77,1.24,56.01,22.98
+NORMAL,224,283,309,7761,2.61,3.3,3.6,90.49

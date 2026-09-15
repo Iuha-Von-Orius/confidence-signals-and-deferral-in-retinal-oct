@@ -1,0 +1,11 @@
+signal,error_auroc
+Mahalanobis stage 1,0.4803383528536903
+Mahalanobis stage 2,0.4517447480944413
+Mahalanobis stage 3,0.45678192972671505
+Mahalanobis stage 4,0.46799962818367724
+Mahalanobis stage 5,0.4216229782487452
+Mahalanobis stage 6,0.24121955753857593
+Mahalanobis six-depth mean,0.38372188139059304
+Cosine (stage 6),0.8677635248187396
+Mutual information,0.9512771890686
+Softmax confidence,0.9318841792154677

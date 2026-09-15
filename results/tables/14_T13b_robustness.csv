@@ -1,0 +1,7 @@
+condition,worst_case_relative_cost,worst_case_source,n_sources_above_one,sources_above_one,mean_relative_cost,median_relative_cost,excluded_sources,exclusion_reason
+1,1.0,Kermany-test,0,,1.0,1.0,OCTDL-ambiguous,relative_cost undefined (zero baseline cost)
+2,1.16,RETOUCH-Spectralis,1,RETOUCH-Spectralis,0.743382723233704,0.749037240795599,OCTDL-ambiguous,relative_cost undefined (zero baseline cost)
+3,0.76,RETOUCH-Spectralis,0,,0.5438995461737719,0.502584789311408,OCTDL-ambiguous,relative_cost undefined (zero baseline cost)
+4,1.0833333333333333,Kermany-test,3,Kermany-test; RETOUCH-Cirrus; RETOUCH-Spectralis,0.8172331613589459,0.7896043165467628,OCTDL-ambiguous,relative_cost undefined (zero baseline cost)
+5,1.0085714285714287,RETOUCH-Topcon,1,RETOUCH-Topcon,0.6447482990404638,0.6016289825282632,OCTDL-ambiguous,relative_cost undefined (zero baseline cost)
+B2,1.2333333333333332,Kermany-test,2,Kermany-test; RETOUCH-Spectralis,0.6763068065862015,0.5547790339157246,OCTDL-ambiguous,relative_cost undefined (zero baseline cost)

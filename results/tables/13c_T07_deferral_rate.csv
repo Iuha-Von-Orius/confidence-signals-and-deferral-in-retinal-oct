@@ -1,0 +1,55 @@
+source,condition,condition_label,deferral_rate,n
+Kermany-test,1,No deferral,0.0,968
+Kermany-test,2,OOD signals,0.04855371900826446,968
+Kermany-test,3,Uncertainty,0.023760330578512397,968
+Kermany-test,4,Conformal,0.005165289256198347,968
+Kermany-test,5,All signals,0.02169421487603306,968
+Kermany-test,B2,Softmax confidence,0.07644628099173553,968
+RETOUCH-Spectralis,1,No deferral,0.0,342
+RETOUCH-Spectralis,2,OOD signals,0.3391812865497076,342
+RETOUCH-Spectralis,3,Uncertainty,0.16374269005847952,342
+RETOUCH-Spectralis,4,Conformal,0.13157894736842105,342
+RETOUCH-Spectralis,5,All signals,0.20175438596491227,342
+RETOUCH-Spectralis,B2,Softmax confidence,0.30116959064327486,342
+RETOUCH-Cirrus,1,No deferral,0.0,342
+RETOUCH-Cirrus,2,OOD signals,0.15497076023391812,342
+RETOUCH-Cirrus,3,Uncertainty,0.14619883040935672,342
+RETOUCH-Cirrus,4,Conformal,0.038011695906432746,342
+RETOUCH-Cirrus,5,All signals,0.1023391812865497,342
+RETOUCH-Cirrus,B2,Softmax confidence,0.2631578947368421,342
+RETOUCH-Topcon,1,No deferral,0.0,324
+RETOUCH-Topcon,2,OOD signals,0.0,324
+RETOUCH-Topcon,3,Uncertainty,0.3425925925925926,324
+RETOUCH-Topcon,4,Conformal,0.05555555555555555,324
+RETOUCH-Topcon,5,All signals,0.018518518518518517,324
+RETOUCH-Topcon,B2,Softmax confidence,0.4166666666666667,324
+Rasti,1,No deferral,0.0,1332
+Rasti,2,OOD signals,0.30180180180180183,1332
+Rasti,3,Uncertainty,0.3430930930930931,1332
+Rasti,4,Conformal,0.15840840840840842,1332
+Rasti,5,All signals,0.25375375375375375,1332
+Rasti,B2,Softmax confidence,0.4692192192192192,1332
+NEH,1,No deferral,0.0,16803
+NEH,2,OOD signals,0.508361602094864,16803
+NEH,3,Uncertainty,0.4249836338749033,16803
+NEH,4,Conformal,0.3052431113491638,16803
+NEH,5,All signals,0.3623162530500506,16803
+NEH,B2,Softmax confidence,0.5671011128965066,16803
+OCTDL-in-label,1,No deferral,0.0,1462
+OCTDL-in-label,2,OOD signals,0.14774281805745554,1462
+OCTDL-in-label,3,Uncertainty,0.18878248974008208,1462
+OCTDL-in-label,4,Conformal,0.08002735978112176,1462
+OCTDL-in-label,5,All signals,0.11285909712722299,1462
+OCTDL-in-label,B2,Softmax confidence,0.2441860465116279,1462
+OCTDL-ambiguous,1,No deferral,0.0,248
+OCTDL-ambiguous,2,OOD signals,0.056451612903225805,248
+OCTDL-ambiguous,3,Uncertainty,0.1693548387096774,248
+OCTDL-ambiguous,4,Conformal,0.09274193548387097,248
+OCTDL-ambiguous,5,All signals,0.12096774193548387,248
+OCTDL-ambiguous,B2,Softmax confidence,0.2056451612903226,248
+OCTDL-novel-class,1,No deferral,0.0,354
+OCTDL-novel-class,2,OOD signals,0.2853107344632768,354
+OCTDL-novel-class,3,Uncertainty,0.5480225988700564,354
+OCTDL-novel-class,4,Conformal,0.288135593220339,354
+OCTDL-novel-class,5,All signals,0.384180790960452,354
+OCTDL-novel-class,B2,Softmax confidence,0.6610169491525424,354
